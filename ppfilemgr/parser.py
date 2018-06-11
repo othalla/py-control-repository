@@ -37,23 +37,6 @@ class GitModule(PuppetModule):
         self._git_reference = git_reference
 
 
-# with open('Puppetfile', 'r') as ppfile:
-    # for line in ppfile:
-        # print('this line : ' + line)
-        # if line.startswith('forge'):
-            # print('Forge directive')
-        # if line.startswith('mod'):
-            # print('python module')
-            # if line.endswith(',\n'):
-                # print('GitUrlModule')
-                # # print(re.search(' (.*),', line))
-                # module = line.split('\'')[1]
-                # ppmodule = PuppetModule(module)
-                # print(ppmodule.name)
-                # # print(ppfile.next())
-            # else:
-                # print('ForgeModule')
-        # if line.sta
 
 
 def file_to_list():
@@ -83,6 +66,4 @@ for index, fragment in enumerate(splited_file):
         else:
             print('ForgeModule')
             print(fragment.split('\'')[1])  # URL MOD NAME
-
-
 
