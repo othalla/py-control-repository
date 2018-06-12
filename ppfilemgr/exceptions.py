@@ -1,0 +1,2 @@
+class ModuleBadGitReferenceTypeExcption(Exception):
+    pass
