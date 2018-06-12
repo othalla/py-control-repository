@@ -29,7 +29,7 @@ class Puppetfile:
         return ""
 
     def _write_forge_modules(self):
-        fragment = "\n"
+        fragment = ""
         for module in self._modules:
             if isinstance(module, ForgeModule):
                 fragment = "{}mod '{}', '{}'\n".format(fragment,
@@ -38,7 +38,7 @@ class Puppetfile:
         return fragment
 
     def _write_git_modules(self):
-        fragment = "\n"
+        fragment = ""
         for module in self._modules:
             if isinstance(module, GitModule):
                 fragment = "{}mod '{}',\n".format(fragment, module.name)
