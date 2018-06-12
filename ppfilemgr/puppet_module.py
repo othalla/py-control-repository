@@ -1,5 +1,8 @@
+from ppfilemgr.exceptions import ModuleBadGitReferenceTypeExcption
+
+
 class PuppetModule:
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self._name = name
 
     @property
@@ -7,28 +10,34 @@ class PuppetModule:
         return self._name
 
 
-class Puppetfile:
-    def __init__(self):
-        self._modules = []
-        self._forge_url = None
-
-    def add_module(self, module: PuppetModule):
-        self._modules.append(module)
-
-    def set_forge(self, url):
-        self._forge_url = url
-
-
-
 class ForgeModule(PuppetModule):
-    def __init__(self, name, version):
+    def __init__(self, name: str, version: str) -> None:
         super(ForgeModule, self).__init__(name)
         self._version = version
 
+    @property
+    def version(self):
+        return self._version
+
 
 class GitModule(PuppetModule):
-    def __init__(self, name, url, git_reference_type, git_reference):
+    def __init__(self, name: str, url: str, git_ref_type: str,
+                 git_ref: str) -> None:
         super(GitModule, self).__init__(name)
         self._url = url
-        self._git_reference_type = git_reference_type
-        self._git_reference = git_reference
+        if git_ref_type not in ['ref', 'branch', 'tag', 'commit']:
+            raise ModuleBadGitReferenceTypeExcption
+        self._git_reference_type = git_ref_type
+        self._git_reference = git_ref
+
+    @property
+    def git_url(self):
+        return self._url
+
+    @property
+    def git_reference_type(self):
+        return self._git_reference_type
+
+    @property
+    def git_reference(self):
+        return self._git_reference
