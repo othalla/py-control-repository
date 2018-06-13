@@ -10,12 +10,21 @@ class Puppetfile:
     def add_module(self, module: PuppetModule) -> None:
         self._modules.append(module)
 
+    def update_module(self, updated_module):
+        for index, module in enumerate(self._modules):
+            if module.name == updated_module.name:
+                self._modules[index] = updated_module
+
     def set_forge(self, url) -> None:
         self._forge_url = url
 
     @property
     def forge_url(self):
         return self._forge_url
+
+    @property
+    def modules(self):
+        return self._modules
 
     def generate(self):
         content = "{}".format(self._write_forge_url_header())
