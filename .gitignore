@@ -1,0 +1,11 @@
+# Pychache
+**/__pycache__/
+
+# Pytest cache
+.pytest_cache/
+
+# vim swap files
+*.swp
+
+# egg
+ppfilemgr.egg-info/
