@@ -26,7 +26,7 @@ class Puppetfile:
     def modules(self):
         return self._modules
 
-    def generate(self):
+    def to_string(self):
         content = "{}".format(self._write_forge_url_header())
         content = "{}{}".format(content, self._write_forge_modules())
         content = "{}{}".format(content, self._write_git_modules())

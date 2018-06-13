@@ -14,7 +14,7 @@ class TestPuppetfile:
         puppetfile.set_forge('https://forge.puppetlabs.com')
         assert puppetfile.forge_url == 'https://forge.puppetlabs.com'
 
-    def test_generate_with_forge_and_git_module(self):
+    def test_to_string_with_forge_and_git_module(self):
         puppetfile = Puppetfile()
         puppetfile.add_module(GitModule('nginx',
                                         'http://someurl/repo/nginx.git',
@@ -24,9 +24,9 @@ class TestPuppetfile:
                             "mod 'nginx',\n"
                             "  :git => 'http://someurl/repo/nginx.git',\n"
                             "  :tag => 'v0.0.1'\n")
-        assert puppetfile.generate() == expected_content
+        assert puppetfile.to_string() == expected_content
 
-    def test_generate_with_given_forge_url(self):
+    def test_to_string_with_given_forge_url(self):
         puppetfile = Puppetfile()
         puppetfile.add_module(GitModule('nginx',
                                         'http://someurl/repo/nginx.git',
@@ -38,4 +38,4 @@ class TestPuppetfile:
                             "mod 'nginx',\n"
                             "  :git => 'http://someurl/repo/nginx.git',\n"
                             "  :tag => 'v0.0.1'\n")
-        assert puppetfile.generate() == expected_content
+        assert puppetfile.to_string() == expected_content
