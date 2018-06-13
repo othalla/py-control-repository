@@ -5,6 +5,11 @@ class PuppetModule:
     def __init__(self, name: str) -> None:
         self._name = name
 
+    def __eq__(self, compared):
+        if self.__dict__ == compared.__dict__:
+            return True
+        return False
+
     @property
     def name(self):
         return self._name
