@@ -1,41 +1,7 @@
 import re
 
-
-class PuppetModule:
-    def __init__(self, name):
-        self._name = name
-
-    @property
-    def name(self):
-        return self._name
-
-
-class Puppetfile:
-    def __init__(self):
-        self._modules = []
-        self._forge = None
-
-    def add_module(self, module: PuppetModule):
-        self._modules.append(module)
-
-    def set_forge(self, url):
-        self._forge_url = url
-
-
-
-class ForgeModule(PuppetModule):
-    def __init__(self, name, version):
-        self._name = name
-        self._version = version
-
-
-class GitModule(PuppetModule):
-    def __init__(self, name, url, git_reference_type, git_reference):
-        self._name = name
-        self._url = url
-        self._git_reference_type = git_reference_type
-        self._git_reference = git_reference
-
+def parse_puppetfile(puppetfile):
+    pass
 
 
 
