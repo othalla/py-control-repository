@@ -1,12 +1,14 @@
-# from github import Github
+from github import Github
+
 from ppfilemgr.puppet_module import PuppetModule
 from ppfilemgr.parser import parse_puppetfile
 from ppfilemgr.github import update_puppetfile, get_puppetfile
 
 
 class ControlRepository:
-    def __init__(self, environment, github_orga, github_repo, github_token,
-                 github_baseurl=None, puppetfile_name='Puppetfile'):
+    def __init__(self, environment: str, github_orga: str, github_repo: str,
+                 github_token: str, github_baseurl=None,
+                 puppetfile_name='Puppetfile') -> None:
         self._environment = environment
         self._github_orga = github_orga
         self._github_repo = github_repo
@@ -32,7 +34,8 @@ class ControlRepository:
                                                self._puppetfile_name)
             self._puppetfile = parser_provider(current_puppetfile)
 
-    def update(self, puppet_module, update_puppetfile_provider=update_puppetfile):
+    def update(self, puppet_module: PuppetModule,
+               update_puppetfile_provider=update_puppetfile) -> None:
         if not isinstance(puppet_module, PuppetModule):
             raise TypeError
         for module in self._puppetfile.modules:
