@@ -5,13 +5,13 @@ class PuppetModule:
     def __init__(self, name: str) -> None:
         self._name = name
 
-    def __eq__(self, compared):
+    def __eq__(self, compared: "PuppetModule") -> bool:
         if self.__dict__ == compared.__dict__:
             return True
         return False
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
 
@@ -21,7 +21,7 @@ class ForgeModule(PuppetModule):
         self._version = version
 
     @property
-    def version(self):
+    def version(self) -> str:
         return self._version
 
 
@@ -36,13 +36,13 @@ class GitModule(PuppetModule):
         self._git_reference = git_ref
 
     @property
-    def git_url(self):
+    def git_url(self) -> str:
         return self._url
 
     @property
-    def git_reference_type(self):
+    def git_reference_type(self) -> str:
         return self._git_reference_type
 
     @property
-    def git_reference(self):
+    def git_reference(self) -> str:
         return self._git_reference
