@@ -1,7 +1,7 @@
 from unittest.mock import Mock
-import pytest
 
-from github.GithubException import GithubException
+from github import GithubException
+import pytest
 
 from ppfilemgr.control_repository import ControlRepository
 from ppfilemgr.puppet_module import ForgeModule
