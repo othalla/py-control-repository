@@ -1,7 +1,7 @@
 import pytest
 
-from ppfilemgr.exceptions import ModuleBadGitReferenceTypeExcption
-from ppfilemgr.puppet_module import GitModule
+from control_repository.exceptions import ModuleBadGitReferenceTypeExcption
+from control_repository.puppet_module import GitModule
 
 
 class TestGitModule:

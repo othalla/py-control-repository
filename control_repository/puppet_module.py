@@ -1,4 +1,4 @@
-from ppfilemgr.exceptions import ModuleBadGitReferenceTypeExcption
+from control_repository.exceptions import ModuleBadGitReferenceTypeExcption
 
 
 class PuppetModule:

@@ -1,5 +1,5 @@
-from ppfilemgr.puppet_module import GitModule, ForgeModule
-from ppfilemgr.puppetfile import Puppetfile
+from control_repository.puppet_module import GitModule, ForgeModule
+from control_repository.puppetfile import Puppetfile
 
 
 class TestPuppetfile:

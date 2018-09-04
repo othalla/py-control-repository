@@ -1,8 +1,8 @@
 from github import Github
 
-from ppfilemgr.puppet_module import PuppetModule
-from ppfilemgr.parser import parse_puppetfile
-from ppfilemgr.github import update_puppetfile, get_puppetfile
+from control_repository.puppet_module import PuppetModule
+from control_repository.parser import parse_puppetfile
+from control_repository.github import update_puppetfile, get_puppetfile
 
 
 class ControlRepository:

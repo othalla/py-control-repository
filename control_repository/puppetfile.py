@@ -1,5 +1,5 @@
 import re
-from ppfilemgr.puppet_module import PuppetModule, ForgeModule, GitModule
+from control_repository.puppet_module import PuppetModule, ForgeModule, GitModule
 
 
 class Puppetfile:

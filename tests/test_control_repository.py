@@ -3,9 +3,9 @@ from unittest.mock import Mock
 from github import GithubException
 import pytest
 
-from ppfilemgr.control_repository import ControlRepository
-from ppfilemgr.puppet_module import ForgeModule
-from ppfilemgr.puppetfile import Puppetfile
+from control_repository.control_repository import ControlRepository
+from control_repository.puppet_module import ForgeModule
+from control_repository.puppetfile import Puppetfile
 
 
 class TestControlRepository:
