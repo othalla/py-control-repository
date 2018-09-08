@@ -18,4 +18,8 @@ class TestControlRepositoryGetEnvironment:
 
     @staticmethod
     def test_if_environment_does_not_exists():
-        pass
+        control_repository = ControlRepository('test_organization',
+                                               'test_repository',
+                                               'some-token')
+        with pytest.raises(GithubException):
+            control_repository.get_environment('missing_environment')
