@@ -47,6 +47,7 @@ class TestControlRepositoryGetEnvironment:
         control_repository = ControlRepository('test_organization',
                                                'test_repository',
                                                'some-token')
-        github().get_organization().get_repo().get_branch.side_effect = GithubException('badstatus', 'missing')
+        repository = github().get_organization().get_repo()
+        repository.get_branch.side_effect = GithubException('badstatus', 'missing')
         with pytest.raises(GithubException):
             control_repository.get_environment('environment')
