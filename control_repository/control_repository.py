@@ -23,7 +23,7 @@ class ControlRepository:
             self._github_repository.get_branch(environment)
         except GithubException:
             raise EnvironmentNotFoundException
-        return Environment()
+        return Environment(environment, self._github_repository)
 
     def _get_github_repository(self) -> Repository:
         try:
