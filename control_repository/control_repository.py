@@ -1,4 +1,6 @@
-from github import Github, GithubException
+from typing import Optional
+
+from github import Github, Repository, GithubException
 
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
@@ -9,21 +11,21 @@ class ControlRepository:
     def __init__(self, github_organization: str,
                  github_repository: str,
                  github_token: str,
-                 github_baseurl=None) -> None:
+                 github_baseurl: Optional[int] = None) -> None:
         self._github_organization = github_organization
         self._github_repository = github_repository
         self._github_token = github_token
         self._github_baseurl = github_baseurl
         self._github_repository = self._get_github_repository()
 
-    def get_environment(self, environment):
+    def get_environment(self, environment: str) -> Environment:
         try:
             self._github_repository.get_branch(environment)
         except GithubException:
             raise EnvironmentNotFoundException
         return Environment()
 
-    def _get_github_repository(self):
+    def _get_github_repository(self) -> Repository:
         try:
             github = Github(self._github_token)
             organization = github.get_organization(self._github_organization)
