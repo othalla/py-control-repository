@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
 
 from github import GithubException
-from github import Repository
 import pytest
 
 from control_repository.control_repository import ControlRepository
