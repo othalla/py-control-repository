@@ -11,12 +11,14 @@ from control_repository.puppet import Environment
 class TestControlRepository:
     @staticmethod
     @patch('control_repository.control_repository.Github')
-    def test_it_get_control_repository_from_github(mock_github):
-        ControlRepository('test_organization',
-                          'test_repository',
+    def test_it_get_control_repository_from_github(github):
+        ControlRepository('organization',
+                          'repository',
                           'some-token')
-        mock_github.assert_called_once()
-        mock_github.assert_called_once_with('some-token')
+        github.assert_called_once()
+        github.assert_called_once_with('some-token')
+        github().get_organization.assert_called_once_with('organization')
+        github().get_organization().get_repo.assert_called_once_with('repository')
 
 
 class TestControlRepositoryGetEnvironment:
@@ -30,10 +32,11 @@ class TestControlRepositoryGetEnvironment:
         assert isinstance(puppet_environment, Environment)
 
     @staticmethod
-    @patch('control_repository.control_repository.Github', MagicMock())
-    def test_if_environment_does_not_exists():
+    @patch('control_repository.control_repository.Github')
+    def test_if_environment_does_not_exists(github):
         control_repository = ControlRepository('test_organization',
                                                'test_repository',
                                                'some-token')
+        github().get_organization().get_repo().get_branch.side_effect = GithubException('badstatus', 'missing')
         with pytest.raises(GithubException):
-            control_repository.get_environment('missing_environment')
+            control_repository.get_environment('environment')

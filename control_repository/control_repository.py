@@ -15,7 +15,11 @@ class ControlRepository:
         self._github_repository = self._get_github_repository()
 
     def get_environment(self, environment):
+        self._github_repository.get_branch(environment)
         return Environment()
 
     def _get_github_repository(self):
         github = Github(self._github_token)
+        organization = github.get_organization(self._github_organization)
+        return organization.get_repo(self._github_repository)
+
