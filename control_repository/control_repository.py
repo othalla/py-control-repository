@@ -12,10 +12,10 @@ class ControlRepository:
         self._github_repository = github_repository
         self._github_token = github_token
         self._github_baseurl = github_baseurl
-        self._github_repository = self._get_github_repository
+        self._github_repository = self._get_github_repository()
 
     def get_environment(self, environment):
         return Environment()
 
     def _get_github_repository(self):
-        github = Github(self._token)
+        github = Github(self._github_token)
