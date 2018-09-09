@@ -1,6 +1,7 @@
 from typing import Optional
 
-from github import Github, Repository, GithubException
+from github import Github, GithubException
+from github.Repository import Repository
 
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
@@ -9,11 +10,11 @@ from control_repository.puppet import Environment
 
 class ControlRepository:
     def __init__(self, github_organization: str,
-                 github_repository: str,
+                 github_repository_name: str,
                  github_token: str,
                  github_baseurl: Optional[int] = None) -> None:
         self._github_organization = github_organization
-        self._github_repository = github_repository
+        self._github_repository_name = github_repository_name
         self._github_token = github_token
         self._github_baseurl = github_baseurl
         self._github_repository = self._get_github_repository()
@@ -29,6 +30,6 @@ class ControlRepository:
         try:
             github = Github(self._github_token)
             organization = github.get_organization(self._github_organization)
-            return organization.get_repo(self._github_repository)
+            return organization.get_repo(self._github_repository_name)
         except GithubException:
             raise ControlRepositoryException
