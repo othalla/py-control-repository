@@ -5,7 +5,8 @@ from github import Repository
 import pytest
 
 from control_repository.control_repository import ControlRepository
-from control_repository.exceptions import ControlRepositoryException
+from control_repository.exceptions import (ControlRepositoryException,
+                                           EnvironmentNotFoundException)
 from control_repository.puppet import Environment
 
 
@@ -49,5 +50,5 @@ class TestControlRepositoryGetEnvironment:
                                                'some-token')
         repository = github().get_organization().get_repo()
         repository.get_branch.side_effect = GithubException('badstatus', 'missing')
-        with pytest.raises(GithubException):
+        with pytest.raises(EnvironmentNotFoundException):
             control_repository.get_environment('environment')

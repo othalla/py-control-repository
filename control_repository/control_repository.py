@@ -1,6 +1,7 @@
 from github import Github, GithubException
 
-from control_repository.exceptions import ControlRepositoryException
+from control_repository.exceptions import (ControlRepositoryException,
+                                           EnvironmentNotFoundException)
 from control_repository.puppet import Environment
 
 
@@ -16,7 +17,10 @@ class ControlRepository:
         self._github_repository = self._get_github_repository()
 
     def get_environment(self, environment):
-        self._github_repository.get_branch(environment)
+        try:
+            self._github_repository.get_branch(environment)
+        except GithubException:
+            raise EnvironmentNotFoundException
         return Environment()
 
     def _get_github_repository(self):

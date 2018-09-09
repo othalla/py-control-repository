@@ -5,5 +5,13 @@ class ControlRepositoryException(Exception):
     """
     pass
 
+
+class EnvironmentNotFoundException(ControlRepositoryException):
+    """
+    Puppet environment not found in the control repository
+    """
+    pass
+
+
 class ModuleBadGitReferenceTypeExcption(Exception):
     pass
