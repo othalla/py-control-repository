@@ -13,5 +13,12 @@ class EnvironmentNotFoundException(ControlRepositoryException):
     pass
 
 
+class PuppetfileNotFoundException(ControlRepositoryException):
+    """
+    No Puppetfile in the current environment
+    """
+    pass
+
+
 class ModuleBadGitReferenceTypeExcption(Exception):
     pass
