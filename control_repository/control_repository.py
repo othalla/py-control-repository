@@ -1,5 +1,6 @@
-from github import Github
+from github import Github, GithubException
 
+from control_repository.exceptions import ControlRepositoryException
 from control_repository.puppet import Environment
 
 
@@ -19,7 +20,9 @@ class ControlRepository:
         return Environment()
 
     def _get_github_repository(self):
-        github = Github(self._github_token)
-        organization = github.get_organization(self._github_organization)
-        return organization.get_repo(self._github_repository)
-
+        try:
+            github = Github(self._github_token)
+            organization = github.get_organization(self._github_organization)
+            return organization.get_repo(self._github_repository)
+        except GithubException:
+            raise ControlRepositoryException

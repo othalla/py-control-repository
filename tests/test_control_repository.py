@@ -5,6 +5,7 @@ from github import Repository
 import pytest
 
 from control_repository.control_repository import ControlRepository
+from control_repository.exceptions import ControlRepositoryException
 from control_repository.puppet import Environment
 
 
@@ -19,6 +20,15 @@ class TestControlRepository:
         github.assert_called_once_with('some-token')
         github().get_organization.assert_called_once_with('organization')
         github().get_organization().get_repo.assert_called_once_with('repository')
+
+    @staticmethod
+    @patch('control_repository.control_repository.Github')
+    def test_it_fails_to_get_control_repository_from_github(github):
+        github.side_effect = GithubException('badstatus', 'missing')
+        with pytest.raises(ControlRepositoryException):
+            ControlRepository('test_organization',
+                              'test_repository',
+                              'some-token')
 
 
 class TestControlRepositoryGetEnvironment:
