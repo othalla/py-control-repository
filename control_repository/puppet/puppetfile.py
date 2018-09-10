@@ -14,11 +14,11 @@ class Puppetfile:
         self._forge_url: str = ''
 
     @property
-    def forge_modules(self) -> ForgeModule:
+    def forge_modules(self) -> List[ForgeModule]:
         return self._forge_modules
 
     @property
-    def git_modules(self) -> GitModule:
+    def git_modules(self) -> List[GitModule]:
         return self._git_modules
 
     @property
