@@ -11,3 +11,11 @@ class TestPuppetfile:
         assert puppetfile.forge_modules == []
         assert puppetfile.git_modules == []
         assert puppetfile.forge_url == ''
+
+    @staticmethod
+    def test_it_parse_forge_url():
+        github_repository = MagicMock()
+        puppetfile = Puppetfile('forge "https://forge.url"', github_repository)
+        assert puppetfile.forge_modules == []
+        assert puppetfile.git_modules == []
+        assert puppetfile.forge_url == 'https://forge.url'
