@@ -12,8 +12,9 @@ class Environment:
 
     def get_puppetfile(self) -> Puppetfile:
         try:
-            self._github_repository.get_file_contents('/Puppetfile',
-                                                      ref=self._name)
-            return Puppetfile()
+            content = self._github_repository.get_file_contents('/Puppetfile',
+                                                                ref=self._name)
+            decoded_content = content.decoded_content.decode('utf-8')
+            return Puppetfile(decoded_content, self._github_repository)
         except GithubException:
             raise PuppetfileNotFoundException
