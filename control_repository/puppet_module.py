@@ -18,7 +18,7 @@ class PuppetModule:
 
 
 class ForgeModule(PuppetModule):
-    def __init__(self, name: str, version: str) -> None:
+    def __init__(self, name: str, version: str = '') -> None:
         super(ForgeModule, self).__init__(name)
         self._version: str = version
 
