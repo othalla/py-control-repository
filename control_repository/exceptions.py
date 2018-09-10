@@ -20,5 +20,12 @@ class PuppetfileNotFoundException(ControlRepositoryException):
     pass
 
 
+class ModuleParserException(ControlRepositoryException):
+    """
+    No valid module can be parsed
+    """
+    pass
+
+
 class ModuleBadGitReferenceTypeExcption(Exception):
     pass
