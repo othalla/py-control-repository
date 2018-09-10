@@ -2,7 +2,8 @@ from github.Repository import Repository
 from github import GithubException
 
 from control_repository.exceptions import PuppetfileNotFoundException
-from control_repository.puppet.puppetfile import Puppetfile
+from control_repository.puppet import Puppetfile
+
 
 class Environment:
     def __init__(self, name: str, github_repository: Repository) -> None:

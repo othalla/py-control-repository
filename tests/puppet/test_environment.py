@@ -4,8 +4,8 @@ import pytest
 from github import GithubException
 
 from control_repository.exceptions import PuppetfileNotFoundException
-from control_repository.puppet.environment import Environment
-from control_repository.puppet.puppetfile import Puppetfile
+from control_repository.puppet import Environment, Puppetfile
+
 
 class TestEnvironmentGetPuppetfile:
     @staticmethod
