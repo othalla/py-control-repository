@@ -6,7 +6,7 @@ import pytest
 from control_repository.control_repository import ControlRepository
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
-from control_repository.puppet import Environment
+from control_repository.puppet.environment import Environment
 
 
 class TestControlRepository:

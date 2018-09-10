@@ -5,7 +5,7 @@ from github.Repository import Repository
 
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
-from control_repository.puppet import Environment
+from control_repository.puppet.environment import Environment
 
 
 class ControlRepository:

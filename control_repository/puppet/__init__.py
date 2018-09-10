@@ -1,2 +1,0 @@
-from control_repository.puppet.environment import Environment
-from control_repository.puppet.puppetfile import Puppetfile
