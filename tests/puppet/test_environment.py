@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+from github import GithubException
 
 from control_repository.exceptions import PuppetfileNotFoundException
 from control_repository.puppet.environment import Environment
@@ -16,5 +17,8 @@ class TestEnvironmentGetPuppetfile:
 
     @staticmethod
     def test_if_puppetfile_missing():
+        github_repository = MagicMock()
+        github_repository.get_file_contents.side_effect = GithubException('code', 'data')
         with pytest.raises(PuppetfileNotFoundException):
-            pass
+            environment = Environment('production', github_repository)
+            environment.get_puppetfile()
