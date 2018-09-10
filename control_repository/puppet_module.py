@@ -1,6 +1,7 @@
 from typing import Any
 
-from control_repository.exceptions import ModuleBadGitReferenceTypeExcption
+from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
+                                           ModuleParserException)
 
 
 class PuppetModule:
@@ -25,6 +26,17 @@ class ForgeModule(PuppetModule):
     @property
     def version(self) -> str:
         return self._version
+
+    @classmethod
+    def from_line(cls, line: str) -> "ForgeModule":
+        fragments = line.split("'")
+        if len(fragments) == 3:
+            if line.endswith(', :latest'):
+                return ForgeModule(fragments[1], version=':latest')
+            return ForgeModule(fragments[1])
+        if len(fragments) == 5:
+            return ForgeModule(fragments[1], version=fragments[3])
+        raise ModuleParserException
 
 
 class GitModule(PuppetModule):
