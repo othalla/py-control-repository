@@ -13,7 +13,7 @@ class TestGitModule:
                       'version')
 
 
-class TestForgemodule:
+class TestForgeModuleFromLine:
     @staticmethod
     def test_it_returns_forge_module_from_line_without_version():
         forge_module = ForgeModule.from_line("mod 'puppetlabs/apache'")
