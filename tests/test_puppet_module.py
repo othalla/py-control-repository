@@ -41,7 +41,7 @@ class TestGitModuleFromLines:
     def test_with_branch_reference_type_returns_git_module():
         git_module = GitModule.from_lines(
             ["mod 'apache',",
-             "    :git => 'https://github.com/puppet/apache'",
+             "    :git    => 'https://github.com/puppet/apache'",
              "    :branch => 'branchname'",
              ])
         assert git_module.name == 'apache'
@@ -65,7 +65,7 @@ class TestGitModuleFromLines:
     def test_with_commit_reference_type_returns_git_module():
         git_module = GitModule.from_lines(
             ["mod 'apache',",
-             "    :git => 'https://github.com/puppet/apache'",
+             "    :git    => 'https://github.com/puppet/apache'",
              "    :commit => '0dfa12'",
              ])
         assert git_module.name == 'apache'
