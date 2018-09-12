@@ -15,7 +15,7 @@ class TestGitModule:
 
 class TestGitModuleFromLines:
     @staticmethod
-    def test_it_returns_git_module_without_reference():
+    def test_it_returns_git_module_without_any_reference_type():
         git_module = GitModule.from_lines(
             ["mod 'apache',",
              "    :git => 'https://github.com/puppet/apache'",
@@ -26,7 +26,31 @@ class TestGitModuleFromLines:
         assert git_module.git_reference == ''
 
     @staticmethod
-    def test_it_returns_git_module_with_tag_reference():
+    def test_with_ref_reference_type_returns_git_module():
+        git_module = GitModule.from_lines(
+            ["mod 'apache',",
+             "    :git => 'https://github.com/puppet/apache'",
+             "    :ref => '0adqs1'",
+             ])
+        assert git_module.name == 'apache'
+        assert git_module.git_url == 'https://github.com/puppet/apache'
+        assert git_module.git_reference_type == 'ref'
+        assert git_module.git_reference == '0adqs1'
+
+    @staticmethod
+    def test_with_branch_reference_type_returns_git_module():
+        git_module = GitModule.from_lines(
+            ["mod 'apache',",
+             "    :git => 'https://github.com/puppet/apache'",
+             "    :branch => 'branchname'",
+             ])
+        assert git_module.name == 'apache'
+        assert git_module.git_url == 'https://github.com/puppet/apache'
+        assert git_module.git_reference_type == 'branch'
+        assert git_module.git_reference == 'branchname'
+
+    @staticmethod
+    def test_with_tag_reference_type_returns_git_module():
         git_module = GitModule.from_lines(
             ["mod 'apache',",
              "    :git => 'https://github.com/puppet/apache'",
@@ -38,16 +62,16 @@ class TestGitModuleFromLines:
         assert git_module.git_reference == '0.1.1'
 
     @staticmethod
-    def test_it_returns_git_module_with_branch_reference():
+    def test_with_commit_reference_type_returns_git_module():
         git_module = GitModule.from_lines(
             ["mod 'apache',",
              "    :git => 'https://github.com/puppet/apache'",
-             "    :branch => 'branchname'",
+             "    :commit => '0dfa12'",
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == 'branch'
-        assert git_module.git_reference == 'branchname'
+        assert git_module.git_reference_type == 'commit'
+        assert git_module.git_reference == '0dfa12'
 
 
 class TestForgeModuleFromLine:
