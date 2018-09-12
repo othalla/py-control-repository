@@ -66,6 +66,20 @@ class GitModule(PuppetModule):
 
     @classmethod
     def from_lines(cls, lines: List[str]) -> "GitModule":
-        name = lines[0].split("'")[1]
-        url = lines[1].split("'")[1]
-        return GitModule(name, url)
+        allowed_references = ['ref', 'branch', 'tag', 'commit']
+        reference = ''
+        reference_type = ''
+        for line in lines:
+            if line.startswith('mod'):
+                name = line.split("'")[1]
+            elif ':git =>' in line:
+                url = line.split("'")[1]
+            else:
+                for allowed_reference in allowed_references:
+                    if allowed_reference in line:
+                        reference_type = allowed_reference
+                        break
+                if reference_type:
+                    reference = line.split("'")[1]
+        return GitModule(name, url, git_reference_type=reference_type,
+                         git_reference=reference)
