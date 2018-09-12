@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
                                            ModuleParserException)
@@ -40,14 +40,17 @@ class ForgeModule(PuppetModule):
 
 
 class GitModule(PuppetModule):
-    def __init__(self, name: str, url: str, git_ref_type: str,
-                 git_ref: str) -> None:
+    def __init__(self,
+                 name: str,
+                 url: str,
+                 git_reference_type: str = '',
+                 git_reference: str = '') -> None:
         super(GitModule, self).__init__(name)
         self._url: str = url
-        if git_ref_type not in ['ref', 'branch', 'tag', 'commit']:
+        if git_reference_type not in ['', 'ref', 'branch', 'tag', 'commit']:
             raise ModuleBadGitReferenceTypeExcption
-        self._git_reference_type: str = git_ref_type
-        self._git_reference: str = git_ref
+        self._git_reference_type: str = git_reference_type
+        self._git_reference: str = git_reference
 
     @property
     def git_url(self) -> str:
@@ -60,3 +63,9 @@ class GitModule(PuppetModule):
     @property
     def git_reference(self) -> str:
         return self._git_reference
+
+    @classmethod
+    def from_lines(cls, lines: List[str]) -> "GitModule":
+        name = lines[0].split("'")[1]
+        url = lines[1].split("'")[1]
+        return GitModule(name, url)

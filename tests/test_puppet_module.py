@@ -13,6 +13,19 @@ class TestGitModule:
                       'version')
 
 
+class TestGitModuleFromLines:
+    @staticmethod
+    def test_it_returns_git_module_without_ref():
+        git_module = GitModule.from_lines(
+            ["mod 'apache',",
+             "    :git => 'https://github.com/puppet/apache'",
+             ])
+        assert git_module.name == 'apache'
+        assert git_module.git_url == 'https://github.com/puppet/apache'
+        assert git_module.git_reference_type == ''
+        assert git_module.git_reference == ''
+
+
 class TestForgeModuleFromLine:
     @staticmethod
     def test_it_returns_forge_module_from_line_without_version():
