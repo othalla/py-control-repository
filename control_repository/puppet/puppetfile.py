@@ -31,3 +31,5 @@ class Puppetfile:
         for line in splitted_content:
             if line.startswith('forge '):
                 self._forge_url = line.split('\'')[1]
+            elif line.startswith('mod '):
+                self._forge_modules.append(ForgeModule.from_line(line))
