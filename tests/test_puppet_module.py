@@ -73,6 +73,14 @@ class TestGitModuleFromLines:
         assert git_module.git_reference_type == 'commit'
         assert git_module.git_reference == '0dfa12'
 
+    @staticmethod
+    def test_with_missing_git_url():
+        with pytest.raises(ModuleParserException):
+            GitModule.from_lines(
+                ["mod 'apache',",
+                 "    :commit => '0dfa12'",
+                 ])
+
 
 class TestForgeModuleFromLine:
     @staticmethod
