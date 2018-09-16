@@ -1,5 +1,10 @@
 # py-puppetfile
 
+## Description
+
+This module aims to manage a Puppet control repository hosted on Github.
+It allow to manage Puppetfile's module (add, update, update) in a specific Puppet environment.
+
 ## Usage
 
 
