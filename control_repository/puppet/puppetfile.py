@@ -28,8 +28,15 @@ class Puppetfile:
 
     def _parse(self) -> None:
         splitted_content = self._content.split('\n')
-        for line in splitted_content:
+        for index, line in enumerate(splitted_content):
             if line.startswith('forge '):
                 self._forge_url = line.split('\'')[1]
-            elif line.startswith('mod '):
-                self._forge_modules.append(ForgeModule.from_line(line))
+            if line.startswith('mod '):
+                if not line.endswith(','):
+                    self._forge_modules.append(ForgeModule.from_line(line))
+                else:
+                    count = 1
+                    while splitted_content[index+count].endswith(','):
+                        count += 1
+                    git_module = GitModule.from_lines(splitted_content[index:(count+1)])
+                    self._git_modules.append(git_module)

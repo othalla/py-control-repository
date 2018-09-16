@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from control_repository.puppet_module import ForgeModule
+from control_repository.puppet_module import ForgeModule, GitModule
 from control_repository.puppet.puppetfile import Puppetfile
 
 
@@ -28,3 +28,16 @@ class TestPuppetfile:
         github_repository = MagicMock()
         puppetfile = Puppetfile(puppetfile_content, github_repository)
         assert expected_module in puppetfile.forge_modules
+
+    @staticmethod
+    def test_it_parse_a_git_module():
+        puppetfile_content = ('mod "apache",\n'
+                              '    :git => "https://url/git/apache",\n'
+                              '    :ref => "ed19f"')
+        expected_module = GitModule('apache',
+                                    'https://url/git/apache',
+                                    'ref',
+                                    'ed19f')
+        github_repository = MagicMock()
+        puppetfile = Puppetfile(puppetfile_content, github_repository)
+        assert expected_module in puppetfile.git_modules
