@@ -38,5 +38,6 @@ class Puppetfile:
                     count = 1
                     while splitted_content[index+count].endswith(','):
                         count += 1
-                    git_module = GitModule.from_lines(splitted_content[index:(count+1)])
+                    module_lines = splitted_content[index:(count+1)]
+                    git_module = GitModule.from_lines(module_lines)
                     self._git_modules.append(git_module)
