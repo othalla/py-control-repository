@@ -1,5 +1,9 @@
 from unittest.mock import MagicMock
 
+import pytest
+from github import GithubException
+
+from control_repository.exceptions import PuppetfileNotFoundException
 from control_repository.puppet_module import ForgeModule, GitModule
 from control_repository.puppet.puppetfile import Puppetfile
 
@@ -70,5 +74,18 @@ class TestPuppetfile:
 
 class TestPuppetfileFromGitubRepository:
     @staticmethod
-    def test_():
-        pass
+    def test_it_read_and_decode_puppetfile_from_github_repository():
+        github_repository = MagicMock()
+        Puppetfile.from_github_repository(github_repository, 'env')
+        github_repository.get_file_contents.assert_called_once_with(
+            '/Puppetfile', ref='env')
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.assert_called_once_with('utf-8')
+
+    @staticmethod
+    def test_no_puppetfile_in_github_repository():
+        github_repository = MagicMock()
+        github_repository.get_file_contents.side_effect = GithubException(
+            404, 'file not found')
+        with pytest.raises(PuppetfileNotFoundException):
+            Puppetfile.from_github_repository(github_repository, 'env')

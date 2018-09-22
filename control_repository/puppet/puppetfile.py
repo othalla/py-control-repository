@@ -1,7 +1,9 @@
 from typing import List
 
+from github import GithubException
 from github.Repository import Repository
 
+from control_repository.exceptions import PuppetfileNotFoundException
 from control_repository.puppet_module import ForgeModule, GitModule
 
 
@@ -43,5 +45,12 @@ class Puppetfile:
                     self._git_modules.append(git_module)
 
     @classmethod
-    def from_github_repository(cls, content: str) -> "Puppetfile":
-        pass
+    def from_github_repository(cls,
+                               github_repository: Repository,
+                               environment: str) -> "Puppetfile":
+        try:
+            content = github_repository.get_file_contents('/Puppetfile',
+                                                          ref=environment)
+            decoded_content = content.decoded_content.decode('utf-8')
+        except GithubException:
+            raise PuppetfileNotFoundException
