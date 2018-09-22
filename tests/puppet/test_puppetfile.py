@@ -12,52 +12,45 @@ class TestPuppetfile:
     @staticmethod
     def test_with_an_empty_puppetfile():
         github_repository = MagicMock()
-        puppetfile = Puppetfile('', github_repository)
+        puppetfile = Puppetfile(github_repository, 'env')
         assert puppetfile.forge_modules == []
         assert puppetfile.git_modules == []
-        assert puppetfile.forge_url == ''
+        assert puppetfile.forge_url is None
 
     @staticmethod
     def test_it_parse_forge_url():
         github_repository = MagicMock()
-        puppetfile = Puppetfile('forge "https://forge.url"', github_repository)
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                forge_url='https://forge.url')
         assert puppetfile.forge_modules == []
         assert puppetfile.git_modules == []
         assert puppetfile.forge_url == 'https://forge.url'
 
     @staticmethod
     def test_it_parse_a_forge_module():
-        puppetfile_content = ('mod "puppetlabs/apache", "0.1.10"')
         expected_module = ForgeModule('puppetlabs/apache', '0.1.10')
         github_repository = MagicMock()
-        puppetfile = Puppetfile(puppetfile_content, github_repository)
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                forge_modules=[expected_module])
         assert expected_module in puppetfile.forge_modules
 
     @staticmethod
     def test_it_parse_a_git_module():
-        puppetfile_content = ('mod "apache",\n'
-                              '    :git => "https://url/git/apache",\n'
-                              '    :ref => "ed19f"')
         expected_module = GitModule('apache',
                                     'https://url/git/apache',
                                     'ref',
                                     'ed19f')
         github_repository = MagicMock()
-        puppetfile = Puppetfile(puppetfile_content, github_repository)
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                git_modules=[expected_module])
         assert expected_module in puppetfile.git_modules
 
     @staticmethod
     def test_it_parse_both_git_and_forge_modules():
-        puppetfile_content = ('mod "apache",\n'
-                              '    :git => "https://url/git/apache",\n'
-                              '    :ref => "ed19f"\n'
-                              'mod "custommod",\n'
-                              '    :git => "https://url/git/custommod"\n'
-                              'mod "puppetlabs/apache", "0.1.10"\n'
-                              'mod "puppetlabs/vcsrepo", "0.2.10"'
-                              )
         github_repository = MagicMock()
-        puppetfile = Puppetfile(puppetfile_content, github_repository)
         git_module_apache = GitModule('apache',
                                       'https://url/git/apache',
                                       'ref',
@@ -66,6 +59,12 @@ class TestPuppetfile:
                                          'https://url/git/custommod')
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                forge_modules=[forge_module_apache,
+                                               forge_module_vcsrepo],
+                                git_modules=[git_module_apache,
+                                             git_module_custommod])
         assert git_module_apache in puppetfile.git_modules
         assert git_module_custommod in puppetfile.git_modules
         assert forge_module_apache in puppetfile.forge_modules

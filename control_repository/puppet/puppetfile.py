@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from github import GithubException
 from github.Repository import Repository
@@ -8,13 +8,17 @@ from control_repository.puppet_module import ForgeModule, GitModule
 
 
 class Puppetfile:
-    def __init__(self, content: str, github_repository: Repository) -> None:
-        self._content: str = content.replace('"', "'")
+    def __init__(self,
+                 github_repository: Repository,
+                 environment: str,
+                 forge_modules: List[ForgeModule] = [],
+                 git_modules: List[GitModule] = [],
+                 forge_url: Optional[str] = None) -> None:
         self._github_repository: Repository = github_repository
-        self._forge_modules: List[ForgeModule] = []
-        self._git_modules: List[GitModule] = []
-        self._forge_url: str = ''
-        self._parse()
+        self._environment = environment
+        self._forge_modules: List[ForgeModule] = forge_modules
+        self._git_modules: List[GitModule] = git_modules
+        self._forge_url: Optional[str] = forge_url
 
     @property
     def forge_modules(self) -> List[ForgeModule]:
