@@ -66,3 +66,9 @@ class TestPuppetfile:
         assert git_module_custommod in puppetfile.git_modules
         assert forge_module_apache in puppetfile.forge_modules
         assert forge_module_vcsrepo in puppetfile.forge_modules
+
+
+class TestPuppetfileFromGitubRepository:
+    @staticmethod
+    def test_():
+        pass

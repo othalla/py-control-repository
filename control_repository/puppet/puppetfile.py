@@ -41,3 +41,7 @@ class Puppetfile:
                     module_lines = splitted_content[index:(index+count+1)]
                     git_module = GitModule.from_lines(module_lines)
                     self._git_modules.append(git_module)
+
+    @classmethod
+    def from_github_repository(cls, content: str) -> "Puppetfile":
+        pass
