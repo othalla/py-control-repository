@@ -88,3 +88,30 @@ class TestPuppetfileFromGitubRepository:
             404, 'file not found')
         with pytest.raises(PuppetfileNotFoundException):
             Puppetfile.from_github_repository(github_repository, 'env')
+
+    @staticmethod
+    def test_it_return_a_puppetfile_with_forge_modules():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = (
+            "mod 'apache',\n"
+            "    :git => 'https://url/git/apache',\n"
+            "    :ref => 'ed19f'\n"
+            "mod 'custommod',\n"
+            "    :git => 'https://url/git/custommod'\n"
+            "mod 'puppetlabs/apache', '0.1.10'\n"
+            "mod 'puppetlabs/vcsrepo', '0.2.10'"
+        )
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
+        git_module_apache = GitModule('apache',
+                                      'https://url/git/apache',
+                                      'ref',
+                                      'ed19f')
+        git_module_custommod = GitModule('custommod',
+                                         'https://url/git/custommod')
+        puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
+        assert forge_module_apache in puppetfile.forge_modules
+        assert forge_module_vcsrepo in puppetfile.forge_modules
+        assert git_module_apache in puppetfile.git_modules
+        assert git_module_custommod in puppetfile.git_modules

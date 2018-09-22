@@ -32,22 +32,6 @@ class Puppetfile:
     def forge_url(self) -> str:
         return self._forge_url
 
-    def _parse(self) -> None:
-        splitted_content = self._content.split('\n')
-        for index, line in enumerate(splitted_content):
-            if line.startswith('forge '):
-                self._forge_url = line.split('\'')[1]
-            if line.startswith('mod '):
-                if not line.endswith(','):
-                    self._forge_modules.append(ForgeModule.from_line(line))
-                else:
-                    count = 1
-                    while splitted_content[index+count].endswith(','):
-                        count += 1
-                    module_lines = splitted_content[index:(index+count+1)]
-                    git_module = GitModule.from_lines(module_lines)
-                    self._git_modules.append(git_module)
-
     @classmethod
     def from_github_repository(cls,
                                github_repository: Repository,
@@ -58,3 +42,25 @@ class Puppetfile:
             decoded_content = content.decoded_content.decode('utf-8')
         except GithubException:
             raise PuppetfileNotFoundException
+        forge_url = None
+        forge_modules = []
+        git_modules = []
+        splitted_content = decoded_content.split('\n')
+        for index, line in enumerate(splitted_content):
+            if line.startswith('forge '):
+                forge_url = line.split('\'')[1]
+            if line.startswith('mod '):
+                if not line.endswith(','):
+                    forge_modules.append(ForgeModule.from_line(line))
+                else:
+                    count = 1
+                    while splitted_content[index+count].endswith(','):
+                        count += 1
+                    module_lines = splitted_content[index:(index+count+1)]
+                    git_module = GitModule.from_lines(module_lines)
+                    git_modules.append(git_module)
+        return Puppetfile(github_repository,
+                          environment,
+                          forge_modules=forge_modules,
+                          git_modules=git_modules,
+                          forge_url=forge_url)
