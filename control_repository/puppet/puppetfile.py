@@ -36,12 +36,8 @@ class Puppetfile:
     def from_github_repository(cls,
                                github_repository: Repository,
                                environment: str) -> "Puppetfile":
-        try:
-            content = github_repository.get_file_contents('/Puppetfile',
-                                                          ref=environment)
-            decoded_content = content.decoded_content.decode('utf-8')
-        except GithubException:
-            raise PuppetfileNotFoundException
+        decoded_content = _get_file_content_from_repository(github_repository,
+                                                            environment)
         forge_url = None
         forge_modules = []
         git_modules = []
@@ -64,3 +60,13 @@ class Puppetfile:
                           forge_modules=forge_modules,
                           git_modules=git_modules,
                           forge_url=forge_url)
+
+
+def _get_file_content_from_repository(github_repository: Repository,
+                                      environment: str) -> str:
+    try:
+        content = github_repository.get_file_contents('/Puppetfile',
+                                                      ref=environment)
+        return content.decoded_content.decode('utf-8')
+    except GithubException:
+        raise PuppetfileNotFoundException
