@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from github import GithubException
 from github.Repository import Repository
@@ -11,14 +11,20 @@ class Puppetfile:
     def __init__(self,
                  github_repository: Repository,
                  environment: str,
+                 sha: Optional[str] = None,
                  forge_modules: List[ForgeModule] = [],
                  git_modules: List[GitModule] = [],
                  forge_url: Optional[str] = None) -> None:
         self._github_repository: Repository = github_repository
         self._environment = environment
+        self._sha: Optional[str] = sha
         self._forge_modules: List[ForgeModule] = forge_modules
         self._git_modules: List[GitModule] = git_modules
         self._forge_url: Optional[str] = forge_url
+
+    @property
+    def sha(self) -> Optional[str]:
+        return self._sha
 
     @property
     def forge_modules(self) -> List[ForgeModule]:
@@ -39,8 +45,8 @@ class Puppetfile:
     def from_github_repository(cls,
                                github_repository: Repository,
                                environment: str) -> "Puppetfile":
-        decoded_content = _get_file_content_from_repository(github_repository,
-                                                            environment)
+        decoded_content, file_sha = _get_file_content_from_repository(
+            github_repository, environment)
         forge_url = None
         forge_modules = []
         git_modules = []
@@ -60,16 +66,17 @@ class Puppetfile:
                     git_modules.append(git_module)
         return cls(github_repository,
                    environment,
+                   sha=file_sha,
                    forge_modules=forge_modules,
                    git_modules=git_modules,
                    forge_url=forge_url)
 
 
 def _get_file_content_from_repository(github_repository: Repository,
-                                      environment: str) -> str:
+                                      environment: str) -> Tuple[str, str]:
     try:
         content = github_repository.get_file_contents('/Puppetfile',
                                                       ref=environment)
-        return content.decoded_content.decode('utf-8')
+        return content.decoded_content.decode('utf-8'), content.sha
     except GithubException:
         raise PuppetfileNotFoundException
