@@ -44,10 +44,12 @@ class Puppetfile:
 
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
-        self._github_repository.update_file("/Puppetfile",
-                                            f'Update Puppetfile {source}',
-                                            new_content,
-                                            self._sha)
+        update_result = self._github_repository.update_file(
+            "/Puppetfile",
+            f'Update Puppetfile {source}',
+            new_content,
+            self._sha)
+        self._sha = update_result['content'].sha
 
     def _to_string(self) -> str:
         content: str = ''
