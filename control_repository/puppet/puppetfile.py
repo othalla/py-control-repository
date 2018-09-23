@@ -32,6 +32,9 @@ class Puppetfile:
     def forge_url(self) -> Optional[str]:
         return self._forge_url
 
+    def set_forge_url(self, url: str) -> None:
+        self._forge_url = url
+
     @classmethod
     def from_github_repository(cls,
                                github_repository: Repository,

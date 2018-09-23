@@ -115,3 +115,13 @@ class TestPuppetfileFromGitubRepository:
         assert forge_module_vcsrepo in puppetfile.forge_modules
         assert git_module_apache in puppetfile.git_modules
         assert git_module_custommod in puppetfile.git_modules
+
+
+class TestPuppetfileSetForgeurl:
+    @staticmethod
+    def test_it_set_forge_url():
+        github_repository = MagicMock()
+        puppetfile = Puppetfile(github_repository, 'env')
+        assert puppetfile.forge_url is None
+        puppetfile.set_forge_url('https://url/to/forge')
+        assert puppetfile.forge_url == 'https://url/to/forge'
