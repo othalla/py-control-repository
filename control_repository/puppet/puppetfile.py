@@ -55,11 +55,11 @@ class Puppetfile:
                     module_lines = splitted_content[index:(index+count+1)]
                     git_module = GitModule.from_lines(module_lines)
                     git_modules.append(git_module)
-        return Puppetfile(github_repository,
-                          environment,
-                          forge_modules=forge_modules,
-                          git_modules=git_modules,
-                          forge_url=forge_url)
+        return cls(github_repository,
+                   environment,
+                   forge_modules=forge_modules,
+                   git_modules=git_modules,
+                   forge_url=forge_url)
 
 
 def _get_file_content_from_repository(github_repository: Repository,
