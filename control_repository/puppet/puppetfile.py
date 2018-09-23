@@ -3,7 +3,8 @@ from typing import List, Optional, Tuple
 from github import GithubException
 from github.Repository import Repository
 
-from control_repository.exceptions import PuppetfileNotFoundException
+from control_repository.exceptions import (PuppetfileNotFoundException,
+                                           PuppetfileUpdateException)
 from control_repository.puppet_module import ForgeModule, GitModule
 
 
@@ -44,11 +45,14 @@ class Puppetfile:
 
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
-        update_result = self._github_repository.update_file(
-            "/Puppetfile",
-            f'Update Puppetfile {source}',
-            new_content,
-            self._sha)
+        try:
+            update_result = self._github_repository.update_file(
+                "/Puppetfile",
+                f'Update Puppetfile {source}',
+                new_content,
+                self._sha)
+        except GithubException:
+            raise PuppetfileUpdateException
         self._sha = update_result['content'].sha
 
     def _to_string(self) -> str:

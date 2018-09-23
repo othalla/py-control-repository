@@ -3,7 +3,8 @@ from unittest.mock import MagicMock
 import pytest
 from github import GithubException
 
-from control_repository.exceptions import PuppetfileNotFoundException
+from control_repository.exceptions import (PuppetfileNotFoundException,
+                                           PuppetfileUpdateException)
 from control_repository.puppet_module import ForgeModule, GitModule
 from control_repository.puppet.puppetfile import Puppetfile
 
@@ -148,3 +149,11 @@ class TestPuppetfileSetForgeurl:
         assert puppetfile.forge_url is None
         puppetfile.set_forge_url('https://url/to/forge')
         assert puppetfile.sha == 'newsha'
+
+    @staticmethod
+    def test_it_fails_to_write_puppetfile_on_github():
+        github_repository = MagicMock()
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        github_repository.update_file.side_effect = GithubException(500, 'Error')
+        with pytest.raises(PuppetfileUpdateException):
+            puppetfile.set_forge_url('https://url/to/forge')
