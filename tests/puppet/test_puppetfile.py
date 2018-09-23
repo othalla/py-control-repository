@@ -128,7 +128,14 @@ class TestPuppetfileSetForgeurl:
     @staticmethod
     def test_it_set_forge_url():
         github_repository = MagicMock()
-        puppetfile = Puppetfile(github_repository, 'env')
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
         assert puppetfile.forge_url is None
         puppetfile.set_forge_url('https://url/to/forge')
         assert puppetfile.forge_url == 'https://url/to/forge'
+        github_repository.update_file.assert_called_once_with(
+            "/Puppetfile",
+            "Update Puppetfile forge URL",
+            "forge 'https://url/to/forge'",
+            "shasha")

@@ -40,6 +40,20 @@ class Puppetfile:
 
     def set_forge_url(self, url: str) -> None:
         self._forge_url = url
+        self._update_file_on_github('forge URL')
+
+    def _update_file_on_github(self, source: str) -> None:
+        new_content = self._to_string()
+        self._github_repository.update_file("/Puppetfile",
+                                            f'Update Puppetfile {source}',
+                                            new_content,
+                                            self._sha)
+
+    def _to_string(self) -> str:
+        content: str = ''
+        if self.forge_url:
+            content = f"forge '{self._forge_url}'"
+        return content
 
     @classmethod
     def from_github_repository(cls,
