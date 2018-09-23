@@ -1,7 +1,5 @@
 from github.Repository import Repository
-from github import GithubException
 
-from control_repository.exceptions import PuppetfileNotFoundException
 from control_repository.puppet.puppetfile import Puppetfile
 
 
@@ -11,10 +9,5 @@ class Environment:
         self._github_repository: Repository = github_repository
 
     def get_puppetfile(self) -> Puppetfile:
-        try:
-            content = self._github_repository.get_file_contents('/Puppetfile',
-                                                                ref=self._name)
-            decoded_content = content.decoded_content.decode('utf-8')
-            return Puppetfile(decoded_content, self._github_repository)
-        except GithubException:
-            raise PuppetfileNotFoundException
+        return Puppetfile.from_github_repository(self._github_repository,
+                                                 self._name)
