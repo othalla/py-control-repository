@@ -29,7 +29,7 @@ class Puppetfile:
         return self._git_modules
 
     @property
-    def forge_url(self) -> str:
+    def forge_url(self) -> Optional[str]:
         return self._forge_url
 
     @classmethod
