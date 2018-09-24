@@ -1,5 +1,7 @@
 # py-puppetfile
 
+[![Build Status](https://travis-ci.org/othalla/py-control-repository.svg?branch=master)](https://travis-ci.org/othalla/py-control-repository)
+
 ## Description
 
 This module aims to manage a Puppet control repository hosted on Github.
