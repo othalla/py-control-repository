@@ -13,9 +13,7 @@ setuptools.setup(
     url="",
     long_description=textwrap.dedent("""\
             To be done"""),
-    packages=[
-        "control_repository"
-    ],
+    packages=setuptools.find_packages(exclude=['tests*']),
     package_data={},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
