@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 
 from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
                                            ModuleParserException)
@@ -19,12 +19,12 @@ class PuppetModule:
 
 
 class ForgeModule(PuppetModule):
-    def __init__(self, name: str, version: str = '') -> None:
+    def __init__(self, name: str, version: Optional[str] = None) -> None:
         super(ForgeModule, self).__init__(name)
-        self._version: str = version
+        self._version: Optional[str] = version
 
     @property
-    def version(self) -> str:
+    def version(self) -> Optional[str]:
         return self._version
 
     @classmethod

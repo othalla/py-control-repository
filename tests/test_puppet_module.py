@@ -87,7 +87,7 @@ class TestForgeModuleFromLine:
     def test_it_returns_forge_module_from_line_without_version():
         forge_module = ForgeModule.from_line("mod 'puppetlabs/apache'")
         assert forge_module.name == 'puppetlabs/apache'
-        assert forge_module.version == ''
+        assert forge_module.version is None
 
     @staticmethod
     def test_it_returns_forge_module_from_line_with_version():
