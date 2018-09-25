@@ -157,3 +157,16 @@ class TestPuppetfileSetForgeurl:
         github_repository.update_file.side_effect = GithubException(500, 'Error')
         with pytest.raises(PuppetfileUpdateException):
             puppetfile.set_forge_url('https://url/to/forge')
+
+
+class TestPuppetfileAddForgeModule():
+    @staticmethod
+    def test_it_add_a_module_to_the_list():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        assert puppetfile.forge_modules == []
+        puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        assert forge_module_apache in puppetfile.forge_modules

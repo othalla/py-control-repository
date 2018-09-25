@@ -43,6 +43,9 @@ class Puppetfile:
         self._forge_url = url
         self._update_file_on_github('forge URL')
 
+    def add_forge_module(self, name: str, version: str) -> None:
+        self._forge_modules.append(ForgeModule(name, version))
+
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
         try:
