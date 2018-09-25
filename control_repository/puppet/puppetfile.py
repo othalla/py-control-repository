@@ -61,11 +61,13 @@ class Puppetfile:
             content = f"forge '{self._forge_url}'"
         return content
 
+
+
     @classmethod
     def from_github_repository(cls,
                                github_repository: Repository,
                                environment: str) -> "Puppetfile":
-        decoded_content, file_sha = _get_file_content_from_repository(
+        decoded_content, file_sha = cls._get_file_content_from_repository(
             github_repository, environment)
         forge_url = None
         forge_modules = []
@@ -91,12 +93,12 @@ class Puppetfile:
                    git_modules=git_modules,
                    forge_url=forge_url)
 
-
-def _get_file_content_from_repository(github_repository: Repository,
-                                      environment: str) -> Tuple[str, str]:
-    try:
-        content = github_repository.get_file_contents('/Puppetfile',
-                                                      ref=environment)
-        return content.decoded_content.decode('utf-8'), content.sha
-    except GithubException:
-        raise PuppetfileNotFoundException
+    @staticmethod
+    def _get_file_content_from_repository(github_repository: Repository,
+                                          environment: str) -> Tuple[str, str]:
+        try:
+            content = github_repository.get_file_contents('/Puppetfile',
+                                                          ref=environment)
+            return content.decoded_content.decode('utf-8'), content.sha
+        except GithubException:
+            raise PuppetfileNotFoundException
