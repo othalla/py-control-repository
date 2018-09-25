@@ -162,7 +162,7 @@ class TestPuppetfileSetForgeurl:
 
 class TestPuppetfileAddForgeModule():
     @staticmethod
-    def test_it_add_a_module_to_the_list():
+    def test_it_add_a_module_to_the_puppetfile():
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
@@ -171,6 +171,11 @@ class TestPuppetfileAddForgeModule():
         puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         assert forge_module_apache in puppetfile.forge_modules
+        github_repository.update_file.assert_called_once_with(
+            "/Puppetfile",
+            "Update Puppetfile - Add forge module puppetlabs/apache",
+            "mod 'puppetlabs/apache', '0.1.10'",
+            "shasha")
 
     @staticmethod
     def test_it_cannot_add_an_existing_module():

@@ -52,6 +52,7 @@ class Puppetfile:
             if name == module.name:
                 raise ModuleAlreadyPresentException
         self._forge_modules.append(module)
+        self._update_file_on_github(f'- Add forge module {name}')
 
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
@@ -69,6 +70,9 @@ class Puppetfile:
         content: str = ''
         if self.forge_url:
             content = f"forge '{self._forge_url}'"
+        if self.forge_modules:
+            for forge_module in self._forge_modules:
+                content += str(forge_module)
         return content
 
     @classmethod
