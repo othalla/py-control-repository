@@ -44,10 +44,13 @@ class Puppetfile:
         self._forge_url = url
         self._update_file_on_github('forge URL')
 
-    def add_forge_module(self, name: str, version: str) -> None:
-        module = ForgeModule(name, version)
-        if module in self._forge_modules:
-            raise ModuleAlreadyPresentException
+    def add_forge_module(self,
+                         name: str,
+                         version: Optional[str] = None) -> None:
+        module = ForgeModule(name, version=version)
+        for module in self._forge_modules:
+            if name == module.name:
+                raise ModuleAlreadyPresentException
         self._forge_modules.append(module)
 
     def _update_file_on_github(self, source: str) -> None:

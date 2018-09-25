@@ -177,10 +177,10 @@ class TestPuppetfileAddForgeModule():
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        forge_module_apache = ForgeModule('puppetlabs/apache')
         puppetfile = Puppetfile(github_repository,
                                 'env',
                                 sha='shasha',
                                 forge_modules=[forge_module_apache])
         with pytest.raises(ModuleAlreadyPresentException):
-            puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
+            puppetfile.add_forge_module('puppetlabs/apache')
