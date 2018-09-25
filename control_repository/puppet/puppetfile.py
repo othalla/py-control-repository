@@ -4,7 +4,8 @@ from github import GithubException
 from github.Repository import Repository
 
 from control_repository.exceptions import (PuppetfileNotFoundException,
-                                           PuppetfileUpdateException)
+                                           PuppetfileUpdateException,
+                                           ModuleAlreadyPresentException)
 from control_repository.puppet_module import ForgeModule, GitModule
 
 
@@ -44,7 +45,10 @@ class Puppetfile:
         self._update_file_on_github('forge URL')
 
     def add_forge_module(self, name: str, version: str) -> None:
-        self._forge_modules.append(ForgeModule(name, version))
+        module = ForgeModule(name, version)
+        if module in self._forge_modules:
+            raise ModuleAlreadyPresentException
+        self._forge_modules.append(module)
 
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
@@ -63,8 +67,6 @@ class Puppetfile:
         if self.forge_url:
             content = f"forge '{self._forge_url}'"
         return content
-
-
 
     @classmethod
     def from_github_repository(cls,

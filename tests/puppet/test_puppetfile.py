@@ -4,7 +4,8 @@ import pytest
 from github import GithubException
 
 from control_repository.exceptions import (PuppetfileNotFoundException,
-                                           PuppetfileUpdateException)
+                                           PuppetfileUpdateException,
+                                           ModuleAlreadyPresentException)
 from control_repository.puppet_module import ForgeModule, GitModule
 from control_repository.puppet.puppetfile import Puppetfile
 
@@ -170,3 +171,16 @@ class TestPuppetfileAddForgeModule():
         puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         assert forge_module_apache in puppetfile.forge_modules
+
+    @staticmethod
+    def test_it_cannot_add_an_existing_module():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_modules=[forge_module_apache])
+        with pytest.raises(ModuleAlreadyPresentException):
+            puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
