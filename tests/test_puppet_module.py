@@ -84,9 +84,14 @@ class TestGitModuleFromLines:
 
 class TestForgeModuleToString:
     @staticmethod
-    def test_it_convert_module_to_string():
+    def test_it_convert_a_module_with_version_to_string():
         forge_module = ForgeModule('puppetlabs/apache', version='0.1.10')
         assert str(forge_module) == "mod 'puppetlabs/apache', '0.1.10'"
+
+    @staticmethod
+    def test_it_convert_a_module_without_version_to_string():
+        forge_module = ForgeModule('puppetlabs/apache')
+        assert str(forge_module) == "mod 'puppetlabs/apache'"
 
 
 class TestForgeModuleFromLine:

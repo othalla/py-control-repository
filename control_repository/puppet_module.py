@@ -28,7 +28,9 @@ class ForgeModule(PuppetModule):
         return self._version
 
     def __str__(self) -> str:
-        return f"mod '{self._name}', '{self._version}'"
+        if self._version:
+            return f"mod '{self._name}', '{self._version}'"
+        return f"mod '{self._name}'"
 
     @classmethod
     def from_line(cls, line: str) -> "ForgeModule":
