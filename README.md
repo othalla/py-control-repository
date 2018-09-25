@@ -10,17 +10,15 @@ It allow to manage Puppetfile's module (add, update, update) in a specific Puppe
 ## Usage
 
 
-## Refactor model 
+### Add a forge module
 
 ```
-control_repository = ControlRepository('orga', 'repo', 'token')
+control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
 
 puppet_environment = control_repository.get_environent('production')
-```
 
-```
 puppetfile = puppet_environment.get_puppetfile()
 
-puppetfile.add_forge_module(module)
+puppetfile.add_forge_module('puppetlabs/apache', version='0.10.1')
 ```
 
