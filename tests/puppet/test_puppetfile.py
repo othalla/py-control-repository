@@ -206,6 +206,11 @@ class TestPuppetfileUpdateForgeModule:
         assert puppetfile.forge_modules[0].version == '0.1.1'
         puppetfile.update_forge_module('puppetlabs/apache', version='0.1.2')
         assert puppetfile.forge_modules[0].version == '0.1.2'
+        github_repository.update_file.assert_called_once_with(
+            "/Puppetfile",
+            "Update Puppetfile - Update forge module puppetlabs/apache",
+            "mod 'puppetlabs/apache', '0.1.2'",
+            "shasha")
 
     @staticmethod
     def test_it_cannot_update_a_missing_module():

@@ -60,7 +60,9 @@ class Puppetfile:
     def update_forge_module(self, name: str, version: str) -> None:
         for module in self._forge_modules:
             if name == module.name:
-                return module.set_version(version)
+                module.set_version(version)
+                return self._update_file_on_github(
+                    f'- Update forge module {name}')
         raise ModuleNotFoundException
 
     def _update_file_on_github(self, source: str) -> None:
