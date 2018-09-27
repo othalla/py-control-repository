@@ -48,3 +48,16 @@ Add a forge module
    puppetfile = puppet_environment.get_puppetfile()
 
    puppetfile.add_forge_module('puppetlabs/apache', version='0.10.1')
+
+Update a forge module
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
+
+   puppet_environment = control_repository.get_environent('production')
+
+   puppetfile = puppet_environment.get_puppetfile()
+
+   puppetfile.update_forge_module('puppetlabs/apache', '0.11.0')
