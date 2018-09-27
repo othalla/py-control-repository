@@ -11,6 +11,20 @@ It allow to manage Puppetfile's module (add, update, update) in a specific Puppe
 ## Usage
 
 
+### Set custom Forge URL on Puppetfile
+
+
+```
+control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
+
+puppet_environment = control_repository.get_environent('production')
+
+puppetfile = puppet_environment.get_puppetfile()
+
+puppetfile.set_forge_url('https://urlcustom.forge/')
+```
+
+
 ### Add a forge module
 
 ```
