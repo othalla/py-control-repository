@@ -14,14 +14,16 @@ class Puppetfile:
                  github_repository: Repository,
                  environment: str,
                  sha: Optional[str] = None,
-                 forge_modules: List[ForgeModule] = [],
-                 git_modules: List[GitModule] = [],
+                 forge_modules: Optional[List[ForgeModule]] = None,
+                 git_modules: Optional[List[GitModule]] = None,
                  forge_url: Optional[str] = None) -> None:
         self._github_repository: Repository = github_repository
         self._environment = environment
         self._sha: Optional[str] = sha
-        self._forge_modules: List[ForgeModule] = forge_modules
-        self._git_modules: List[GitModule] = git_modules
+        self._forge_modules: List[ForgeModule]
+        self._forge_modules = [] if forge_modules is None else forge_modules
+        self._git_modules: List[GitModule]
+        self._git_modules = [] if git_modules is None else git_modules
         self._forge_url: Optional[str] = forge_url
 
     @property
