@@ -7,12 +7,11 @@ version = "0.1.0"
 setuptools.setup(
     name="py-control-repository",
     version=version,
-    description="Module to manage puppet control repository hosted on Github",
+    description="Molule to manage Puppet control repository hosted on Github",
     author="Florian Chardin",
     author_email="othalla.lf@gmail.com",
     url="",
-    long_description=textwrap.dedent("""\
-            To be done"""),
+    long_description=open('README.rst').read(),
     packages=setuptools.find_packages(exclude=['tests*']),
     package_data={},
     classifiers=[
