@@ -5,8 +5,10 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-  - pip install pytest-cov
+  - pip install pytest-cov codecov
 # command to run tests
 script:
   - pip install -e .
-  - pytest -v tests
+  - py.test --cov=control_repository
+after_success:
+  - codecov
