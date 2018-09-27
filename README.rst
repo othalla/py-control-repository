@@ -21,6 +21,19 @@ Install
 Usage
 -----
 
+Add a custom forge URL
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
+
+   puppet_environment = control_repository.get_environent('production')
+
+   puppetfile = puppet_environment.get_puppetfile()
+
+   puppetfile.set_forge_url('https://urlcustomforge.com/forge')
+
 Add a forge module
 ~~~~~~~~~~~~~~~~~~
 
