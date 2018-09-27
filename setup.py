@@ -1,5 +1,4 @@
 import setuptools
-import textwrap
 
 version = "0.1.0"
 
