@@ -6,6 +6,8 @@ Py Control Repository - Python SDK for Puppet Control Repository
     :target: https://travis-ci.org/othalla/py-control-repository
 .. image:: https://badge.fury.io/py/py-control-repository.svg
     :target: https://badge.fury.io/py/py-control-repository
+.. image:: https://codecov.io/gh/othalla/py-control-repository/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/othalla/py-control-repository
 
 Py Control Repository is SDK for Pyththon which allows developpers
 to manage a Puppet Control Repository based on GitHub.
