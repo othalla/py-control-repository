@@ -32,6 +32,9 @@ class ForgeModule(PuppetModule):
             return f"mod '{self._name}', '{self._version}'"
         return f"mod '{self._name}'"
 
+    def set_version(self, version: str) -> None:
+        self._version = version
+
     @classmethod
     def from_line(cls, line: str) -> "ForgeModule":
         fragments = line.split("'")
