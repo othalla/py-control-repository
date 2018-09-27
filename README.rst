@@ -23,14 +23,19 @@ Install
 Usage
 -----
 
-Get Puppetfile
-~~~~~~~~~~~~~~
+Get Puppet Environment
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
 
    puppet_environment = control_repository.get_environent('production')
+
+Get Puppetfile
+~~~~~~~~~~~~~~
+
+.. code-block:: python
 
    puppetfile = puppet_environment.get_puppetfile()
 
