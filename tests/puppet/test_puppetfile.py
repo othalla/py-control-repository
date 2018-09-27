@@ -5,7 +5,8 @@ from github import GithubException
 
 from control_repository.exceptions import (PuppetfileNotFoundException,
                                            PuppetfileUpdateException,
-                                           ModuleAlreadyPresentException)
+                                           ModuleAlreadyPresentException,
+                                           ModuleNotFoundException)
 from control_repository.puppet_module import ForgeModule, GitModule
 from control_repository.puppet.puppetfile import Puppetfile
 
@@ -205,3 +206,13 @@ class TestPuppetfileUpdateForgeModule:
         assert puppetfile.forge_modules[0].version == '0.1.1'
         puppetfile.update_forge_module('puppetlabs/apache', version='0.1.2')
         assert puppetfile.forge_modules[0].version == '0.1.2'
+
+    @staticmethod
+    def test_it_cannot_update_a_missing_module():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        assert puppetfile.forge_modules == []
+        with pytest.raises(ModuleNotFoundException):
+            puppetfile.update_forge_module('puppetlabs/apache', '0.1.2')

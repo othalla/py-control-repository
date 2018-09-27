@@ -13,6 +13,13 @@ class EnvironmentNotFoundException(ControlRepositoryException):
     pass
 
 
+class ModuleNotFoundException(ControlRepositoryException):
+    """
+    Module not found in Puppetfile
+    """
+    pass
+
+
 class PuppetfileNotFoundException(ControlRepositoryException):
     """
     No Puppetfile in the current environment
