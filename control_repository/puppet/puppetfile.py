@@ -54,6 +54,11 @@ class Puppetfile:
         self._forge_modules.append(module)
         self._update_file_on_github(f'- Add forge module {name}')
 
+    def update_forge_module(self, name: str, version: str) -> None:
+        for module in self._forge_modules:
+            if name == module.name:
+                module.set_version(version)
+
     def _update_file_on_github(self, source: str) -> None:
         new_content = self._to_string()
         try:

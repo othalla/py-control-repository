@@ -189,3 +189,19 @@ class TestPuppetfileAddForgeModule():
                                 forge_modules=[forge_module_apache])
         with pytest.raises(ModuleAlreadyPresentException):
             puppetfile.add_forge_module('puppetlabs/apache')
+
+
+class TestPuppetfileUpdateForgeModule:
+    @staticmethod
+    def test_it_update_a_module_in_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.1')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_modules=[forge_module_apache])
+        assert puppetfile.forge_modules[0].version == '0.1.1'
+        puppetfile.update_forge_module('puppetlabs/apache', version='0.1.2')
+        assert puppetfile.forge_modules[0].version == '0.1.2'
