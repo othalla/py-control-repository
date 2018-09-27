@@ -1,6 +1,7 @@
 # py-control-repository
 
 [![Build Status](https://travis-ci.org/othalla/py-control-repository.svg?branch=master)](https://travis-ci.org/othalla/py-control-repository)
+[![PyPI version](https://badge.fury.io/py/py-control-repository.svg)](https://badge.fury.io/py/py-control-repository)
 
 ## Description
 
