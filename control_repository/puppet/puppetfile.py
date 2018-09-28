@@ -62,8 +62,10 @@ class Puppetfile:
                        reference: Optional[str] = None) -> None:
         module = GitModule(name, url, git_reference_type=reference_type,
                            git_reference=reference)
+        for module in self._git_modules:
+            if name == module.name:
+                raise ModuleAlreadyPresentException
         self._git_modules.append(module)
-
 
     def add_forge_module(self,
                          name: str,

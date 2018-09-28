@@ -179,6 +179,21 @@ class TestPuppetfileAddGitModule:
                                       'ed19f')
         assert git_module_apache in puppetfile.git_modules
 
+    @staticmethod
+    def test_it_cannot_add_an_existing_git_module():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        git_module_apache = GitModule('apache',
+                                      'https://url/git/apache',
+                                      'ref',
+                                      'ed19f')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                git_modules=[git_module_apache])
+        with pytest.raises(ModuleAlreadyPresentException):
+            puppetfile.add_git_module('apache', 'https://url/git/apache')
 
 class TestPuppetfileAddForgeModule():
     @staticmethod
