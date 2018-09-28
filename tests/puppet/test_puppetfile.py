@@ -221,3 +221,24 @@ class TestPuppetfileUpdateForgeModule:
         assert puppetfile.forge_modules == []
         with pytest.raises(ModuleNotFoundException):
             puppetfile.update_forge_module('puppetlabs/apache', '0.1.2')
+
+
+class TestPuppetfileListModules:
+    @staticmethod
+    def test_it_returns_the_list_of_modules():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        git_module_custommod = GitModule('custommod',
+                                         'https://url/git/custommod')
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_modules=[forge_module_apache,
+                                               forge_module_vcsrepo],
+                                git_modules=[git_module_custommod])
+        assert sorted(puppetfile.list_modules()) == sorted(['custommod',
+                                                            'puppetlabs/apache',
+                                                            'puppetlabs/vcsrepo'])

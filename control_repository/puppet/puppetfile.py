@@ -43,6 +43,14 @@ class Puppetfile:
     def forge_url(self) -> Optional[str]:
         return self._forge_url
 
+    def list_modules(self) -> Optional[List[str]]:
+        module_list: List[str] = []
+        for forge_module in self._forge_modules:
+            module_list.append(forge_module.name)
+        for git_module in self._git_modules:
+            module_list.append(git_module.name)
+        return module_list
+
     def set_forge_url(self, url: str) -> None:
         self._forge_url = url
         self._update_file_on_github('forge URL')
