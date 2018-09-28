@@ -55,6 +55,16 @@ class Puppetfile:
         self._forge_url = url
         self._update_file_on_github('forge URL')
 
+    def add_git_module(self,
+                       name: str,
+                       url: str,
+                       reference_type: Optional[str] = None,
+                       reference: Optional[str] = None) -> None:
+        module = GitModule(name, url, git_reference_type=reference_type,
+                           git_reference=reference)
+        self._git_modules.append(module)
+
+
     def add_forge_module(self,
                          name: str,
                          version: Optional[str] = None) -> None:

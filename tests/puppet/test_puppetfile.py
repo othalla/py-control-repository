@@ -161,6 +161,25 @@ class TestPuppetfileSetForgeurl:
             puppetfile.set_forge_url('https://url/to/forge')
 
 
+class TestPuppetfileAddGitModule:
+    @staticmethod
+    def test_it_add_a_git_module_to_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        assert puppetfile.git_modules == []
+        puppetfile.add_git_module('apache',
+                                  'https://url/git/apache',
+                                  reference_type='ref',
+                                  reference='ed19f')
+        git_module_apache = GitModule('apache',
+                                      'https://url/git/apache',
+                                      'ref',
+                                      'ed19f')
+        assert git_module_apache in puppetfile.git_modules
+
+
 class TestPuppetfileAddForgeModule():
     @staticmethod
     def test_it_add_a_module_to_the_puppetfile():
