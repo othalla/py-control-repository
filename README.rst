@@ -39,6 +39,13 @@ Get Puppetfile
 
    puppetfile = puppet_environment.get_puppetfile()
 
+List Puppet modules in Puppetfile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   module_list = puppetfile.list_modules()
+
 Add a custom forge URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -59,3 +66,25 @@ Update a forge module
 .. code-block:: python
 
    puppetfile.update_forge_module('puppetlabs/apache', '0.11.0')
+
+Add a git module
+~~~~~~~~~~~~~~~~
+
+With no version spicified, it will install the current master branch.
+
+.. code-block:: python
+
+   puppetfile.add_git_module('custom_module', 'https://url.my.git/orga/custom_module')
+
+You can specify a specific git reference. Supported are :
+- branch
+- ref
+- tag
+- commit
+
+.. code-block:: python
+
+   puppetfile.add_git_module('custom_module',
+                             'https://url.my.git/orga/custom_module',
+                             reference_type='commit',
+                             reference='ae1fe')
