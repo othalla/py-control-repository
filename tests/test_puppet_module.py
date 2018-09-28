@@ -22,8 +22,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == ''
-        assert git_module.git_reference == ''
+        assert git_module.git_reference_type is None
+        assert git_module.git_reference is None
 
     @staticmethod
     def test_with_ref_reference_type_returns_git_module():

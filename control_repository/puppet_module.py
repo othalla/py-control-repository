@@ -51,32 +51,32 @@ class GitModule(PuppetModule):
     def __init__(self,
                  name: str,
                  url: str,
-                 git_reference_type: str = '',
-                 git_reference: str = '') -> None:
+                 git_reference_type: Optional[str] = None,
+                 git_reference: Optional[str] = None) -> None:
         super(GitModule, self).__init__(name)
         self._url: str = url
-        if git_reference_type not in ['', 'ref', 'branch', 'tag', 'commit']:
+        if git_reference_type not in [None, 'ref', 'branch', 'tag', 'commit']:
             raise ModuleBadGitReferenceTypeExcption
-        self._git_reference_type: str = git_reference_type
-        self._git_reference: str = git_reference
+        self._git_reference_type: Optional[str] = git_reference_type
+        self._git_reference: Optional[str] = git_reference
 
     @property
     def git_url(self) -> str:
         return self._url
 
     @property
-    def git_reference_type(self) -> str:
+    def git_reference_type(self) -> Optional[str]:
         return self._git_reference_type
 
     @property
-    def git_reference(self) -> str:
+    def git_reference(self) -> Optional[str]:
         return self._git_reference
 
     @classmethod
     def from_lines(cls, lines: List[str]) -> "GitModule":
-        allowed_references: List[str] = [':ref', ':branch', ':tag', ':commit']
-        reference: str = ''
-        reference_type: str = ''
+        allowed_references: List[str] = ['ref', 'branch', 'tag', 'commit']
+        reference: Optional[str] = None
+        reference_type: Optional[str] = None
         url: str = ''
         for line in lines:
             if line.startswith('mod'):
@@ -92,5 +92,5 @@ class GitModule(PuppetModule):
                     reference = line.split("'")[1]
         if not url:
             raise ModuleParserException
-        return GitModule(name, url, git_reference_type=reference_type[1:],
+        return GitModule(name, url, git_reference_type=reference_type,
                          git_reference=reference)
