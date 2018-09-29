@@ -6,7 +6,7 @@ version = "0.2.1"
 setuptools.setup(
     name="py-control-repository",
     version=version,
-    description="Molule to manage Puppet control repository hosted on Github",
+    description="Module to manage Puppet control repository hosted on Github",
     author="Florian Chardin",
     author_email="othalla.lf@gmail.com",
     url="https://github.com/othalla/py-control-repository",
