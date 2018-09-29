@@ -93,6 +93,12 @@ class TestGitModuleToString:
                                    "  :git => 'https://url/to/git/apache',\n"
                                    "  :branch => 'test'")
 
+    @staticmethod
+    def test_it_convert_a_git_module_without_reference_to_string():
+        git_module = GitModule('apache', 'https://url/to/git/apache')
+        assert str(git_module) == ("mod 'apache',\n"
+                                   "  :git => 'https://url/to/git/apache'")
+
 
 class TestForgeModuleToString:
     @staticmethod

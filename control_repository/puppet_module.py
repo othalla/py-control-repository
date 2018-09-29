@@ -77,6 +77,8 @@ class GitModule(PuppetModule):
             return (f"mod '{self._name}',\n"
                     f"  :git => '{self._url}',\n"
                     f"  :{self._git_reference_type} => '{self._git_reference}'")
+        return (f"mod '{self._name}',\n"
+                f"  :git => '{self._url}'")
 
     @classmethod
     def from_lines(cls, lines: List[str]) -> "GitModule":
