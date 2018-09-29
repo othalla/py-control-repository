@@ -85,7 +85,7 @@ class TestPuppetfileFromGitubRepository:
         content.decoded_content.decode.assert_called_once_with('utf-8')
 
     @staticmethod
-    def test_no_puppetfile_in_github_repository():
+    def test_whith_no_puppetfile_in_github_repository():
         github_repository = MagicMock()
         github_repository.get_file_contents.side_effect = GithubException(
             404, 'file not found')
