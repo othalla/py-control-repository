@@ -55,6 +55,10 @@ class Puppetfile:
         self._forge_url = url
         self._update_file_on_github('forge URL')
 
+    def remove_forge_url(self) -> None:
+        self._forge_url = None
+        self._update_file_on_github('- Remove forge URL')
+
     def add_git_module(self,
                        name: str,
                        url: str,

@@ -171,6 +171,26 @@ class TestPuppetfileSetForgeurl:
             puppetfile.set_forge_url('https://url/to/forge')
 
 
+class TestPuppetfileRemoveForgeurl:
+    @staticmethod
+    def test_it_unset_forge_url():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_url='https://url/to/forge')
+        assert puppetfile.forge_url == 'https://url/to/forge'
+        puppetfile.remove_forge_url()
+        assert puppetfile.forge_url is None
+        github_repository.update_file.assert_called_once_with(
+            "/Puppetfile",
+            "Update Puppetfile - Remove forge URL",
+            "",
+            "shasha")
+
+
 class TestPuppetfileAddGitModule:
     @staticmethod
     def test_it_add_a_git_module_to_the_puppetfile():
