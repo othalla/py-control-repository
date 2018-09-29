@@ -1,7 +1,8 @@
 from typing import Any, List, Optional
 
 from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
-                                           ModuleParserException)
+                                           ModuleParserException,
+                                           ModuleMalformedException)
 
 
 class PuppetModule:
@@ -55,6 +56,8 @@ class GitModule(PuppetModule):
                  git_reference: Optional[str] = None) -> None:
         super(GitModule, self).__init__(name)
         self._url: str = url
+        if git_reference_type and not git_reference:
+            raise ModuleMalformedException
         if git_reference_type not in [None, 'ref', 'branch', 'tag', 'commit']:
             raise ModuleBadGitReferenceTypeExcption
         self._git_reference_type: Optional[str] = git_reference_type

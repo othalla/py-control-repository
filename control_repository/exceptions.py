@@ -6,6 +6,14 @@ class ControlRepositoryException(Exception):
     pass
 
 
+class ModuleMalformedException(Exception):
+    """
+    When a module is called without correct params
+    A GitModule with a github reference type but no reference
+    """
+    pass
+
+
 class EnvironmentNotFoundException(ControlRepositoryException):
     """
     Puppet environment not found in the control repository

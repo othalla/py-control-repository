@@ -1,7 +1,8 @@
 import pytest
 
 from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
-                                           ModuleParserException)
+                                           ModuleParserException,
+                                           ModuleMalformedException)
 from control_repository.puppet_module import GitModule, ForgeModule
 
 
@@ -11,6 +12,13 @@ class TestGitModule:
         with pytest.raises(ModuleBadGitReferenceTypeExcption):
             GitModule('nginx', 'https://url/repo/nginx.git', 'bad_reference',
                       'version')
+
+    @staticmethod
+    def test_if_module_has_reference_type_without_reference():
+        with pytest.raises(ModuleMalformedException):
+            GitModule('nginx',
+                      'https://url/repo/nginx.git',
+                      git_reference_type='branch')
 
 
 class TestGitModuleFromLines:
