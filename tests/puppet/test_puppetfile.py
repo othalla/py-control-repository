@@ -100,7 +100,7 @@ class TestPuppetfileFromGitubRepository:
         assert puppetfile.sha == 'shasha'
 
     @staticmethod
-    def test_it_return_a_puppetfile_with_forge_modules():
+    def test_it_returns_a_puppetfile_with_both_git_and_forge_modules():
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = (
