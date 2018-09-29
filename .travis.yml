@@ -4,11 +4,9 @@ python:
   #- "3.7" commented due to travis distrib install error / permission denied
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
-  - pip install pytest-cov codecov
+  - pip install tox codecov
 # command to run tests
 script:
-  - pip install -e .
-  - py.test --cov=control_repository
+  - tox -v
 after_success:
   - codecov
