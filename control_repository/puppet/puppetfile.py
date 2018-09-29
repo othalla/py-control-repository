@@ -66,6 +66,7 @@ class Puppetfile:
             if name == module.name:
                 raise ModuleAlreadyPresentException
         self._git_modules.append(module)
+        self._update_file_on_github(f'- Update git module {name}')
 
     def add_forge_module(self,
                          name: str,
@@ -104,6 +105,9 @@ class Puppetfile:
         if self.forge_modules:
             for forge_module in self._forge_modules:
                 content += str(forge_module)
+        if self._git_modules:
+            for git_module in self._git_modules:
+                content += str(git_module)
         return content
 
     @classmethod
