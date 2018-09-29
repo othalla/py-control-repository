@@ -26,5 +26,6 @@ setuptools.setup(
     install_requires=[
         "PyGithub>=1.43",
     ],
-    extras_require={}
+    extras_require={},
+    scripts=['scripts/type_checker.sh'],
 )
