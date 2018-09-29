@@ -9,7 +9,7 @@ setuptools.setup(
     description="Molule to manage Puppet control repository hosted on Github",
     author="Florian Chardin",
     author_email="othalla.lf@gmail.com",
-    url="",
+    url="https://github.com/othalla/py-control-repository",
     long_description=open('README.rst').read(),
     packages=setuptools.find_packages(exclude=['tests*']),
     package_data={},
