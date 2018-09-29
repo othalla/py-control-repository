@@ -77,11 +77,15 @@ class GitModule(PuppetModule):
 
     def __str__(self) -> str:
         if self._git_reference and self._git_reference_type:
-            return (f"mod '{self._name}',\n"
-                    f"  :git => '{self._url}',\n"
-                    f"  :{self._git_reference_type} => '{self._git_reference}'")
-        return (f"mod '{self._name}',\n"
-                f"  :git => '{self._url}'")
+            return (
+                f"mod '{self._name}',\n"
+                f"  :git => '{self._url}',\n"
+                f"  :{self._git_reference_type} => '{self._git_reference}'"
+            )
+        return (
+            f"mod '{self._name}',\n"
+            f"  :git => '{self._url}'"
+        )
 
     @classmethod
     def from_lines(cls, lines: List[str]) -> "GitModule":
