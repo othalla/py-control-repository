@@ -53,6 +53,13 @@ Add a custom forge URL
 
    puppetfile.set_forge_url('https://urlcustomforge.com/forge')
 
+Remove a custom forge URL
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   puppetfile.remove_forge_url()
+
 Add a forge module
 ~~~~~~~~~~~~~~~~~~
 
@@ -77,6 +84,7 @@ With no version spicified, it will install the current master branch.
    puppetfile.add_git_module('custom_module', 'https://url.my.git/orga/custom_module')
 
 You can specify a specific git reference. Supported are :
+
 - branch
 - ref
 - tag
