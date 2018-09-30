@@ -190,6 +190,18 @@ class TestPuppetfileRemoveForgeurl:
             "",
             "shasha")
 
+    @staticmethod
+    def test_it_update_puppetfile_git_sha():
+        github_repository = MagicMock()
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_url='https://url/to/forge')
+        github_repository.update_file()['content'].sha = 'newsha'
+        assert puppetfile.forge_url == 'https://url/to/forge'
+        puppetfile.remove_forge_url()
+        assert puppetfile.sha == 'newsha'
+
 
 class TestPuppetfileAddGitModule:
     @staticmethod
