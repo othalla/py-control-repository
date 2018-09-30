@@ -132,9 +132,9 @@ class Puppetfile:
                     forge_modules.append(ForgeModule.from_line(line))
                 else:
                     count = 1
-                    while splitted_content[index+count].endswith(','):
+                    while splitted_content[index + count].endswith(','):
                         count += 1
-                    module_lines = splitted_content[index:(index+count+1)]
+                    module_lines = splitted_content[index:(index + count + 1)]
                     git_module = GitModule.from_lines(module_lines)
                     git_modules.append(git_module)
         return cls(github_repository,
