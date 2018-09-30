@@ -182,6 +182,7 @@ class TestPuppetfileRemoveForgeurl:
                                 sha='shasha',
                                 forge_url='https://url/to/forge')
         assert puppetfile.forge_url == 'https://url/to/forge'
+        assert puppetfile.sha == 'shasha'
         puppetfile.remove_forge_url()
         assert puppetfile.forge_url is None
         github_repository.update_file.assert_called_once_with(
@@ -199,6 +200,7 @@ class TestPuppetfileRemoveForgeurl:
                                 forge_url='https://url/to/forge')
         github_repository.update_file()['content'].sha = 'newsha'
         assert puppetfile.forge_url == 'https://url/to/forge'
+        assert puppetfile.sha == 'shasha'
         puppetfile.remove_forge_url()
         assert puppetfile.sha == 'newsha'
 
