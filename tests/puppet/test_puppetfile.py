@@ -244,6 +244,7 @@ class TestPuppetfileAddGitModule:
         with pytest.raises(ModuleAlreadyPresentException):
             puppetfile.add_git_module('apache', 'https://url/git/apache')
 
+
 class TestPuppetfileAddForgeModule():
     @staticmethod
     def test_it_add_a_module_to_the_puppetfile():
