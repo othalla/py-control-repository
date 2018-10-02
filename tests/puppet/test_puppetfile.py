@@ -225,7 +225,9 @@ class TestPuppetfileAddGitModule:
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
             "Update Puppetfile - Update git module apache",
-            "mod 'apache',\n  :git => 'https://url/git/apache',\n  :ref => 'ed19f'",
+            ("mod 'apache',\n"
+             "  :git => 'https://url/git/apache',\n"
+             "  :ref => 'ed19f'"),
             "shasha")
 
     @staticmethod
@@ -296,7 +298,9 @@ class TestPuppetfileUpdateGitModule:
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
             "Update Puppetfile - Update git module apache",
-            "mod 'apache',\n  :git => 'https://url/git/apache',\n  :ref => 'a76f6fb'",
+            ("mod 'apache',\n"
+             "  :git => 'https://url/git/apache',\n"
+             "  :ref => 'a76f6fb'"),
             "shasha")
 
     @staticmethod
