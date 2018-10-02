@@ -108,6 +108,18 @@ class TestGitModuleToString:
                                    "  :git => 'https://url/to/git/apache'")
 
 
+class TestGitModuleSetReference:
+    @staticmethod
+    def test_it_change_git_module_reference():
+        git_module = GitModule('apache',
+                               'https://url/to/git/apache',
+                               git_reference_type='branch',
+                               git_reference='test')
+        assert git_module.git_reference == 'test'
+        git_module.set_reference('newtest')
+        assert git_module.git_reference == 'newtest'
+
+
 class TestForgeModuleToString:
     @staticmethod
     def test_it_convert_a_module_with_version_to_string():
