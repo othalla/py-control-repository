@@ -75,7 +75,11 @@ class GitModule(PuppetModule):
     def git_reference(self) -> Optional[str]:
         return self._git_reference
 
-    def set_reference(self, reference: str) -> None:
+    def set_reference(self,
+                      reference: str,
+                      git_reference_type: Optional[str] = None) -> None:
+        if git_reference_type:
+            self._git_reference_type = git_reference_type
         self._git_reference = reference
 
     def __str__(self) -> str:

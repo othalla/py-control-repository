@@ -119,6 +119,18 @@ class TestGitModuleSetReference:
         git_module.set_reference('newtest')
         assert git_module.git_reference == 'newtest'
 
+    @staticmethod
+    def test_it_update_both_reference_and_reference_type_if_supplied():
+        git_module = GitModule('apache',
+                               'https://url/to/git/apache',
+                               git_reference_type='branch',
+                               git_reference='test')
+        assert git_module.git_reference == 'test'
+        assert git_module.git_reference_type == 'branch'
+        git_module.set_reference('1.0.0', git_reference_type='tag')
+        assert git_module.git_reference == '1.0.0'
+        assert git_module.git_reference_type == 'tag'
+
 
 class TestForgeModuleToString:
     @staticmethod
