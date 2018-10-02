@@ -299,6 +299,16 @@ class TestPuppetfileUpdateGitModule:
             "mod 'apache',\n  :git => 'https://url/git/apache',\n  :ref => 'a76f6fb'",
             "shasha")
 
+    @staticmethod
+    def test_it_cannot_update_a_missing_git_module():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        assert puppetfile.git_modules == []
+        with pytest.raises(ModuleNotFoundException):
+            puppetfile.update_git_module('apache', 'updatebranch')
+
 
 class TestPuppetfileUpdateForgeModule:
     @staticmethod

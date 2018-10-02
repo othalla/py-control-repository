@@ -88,6 +88,7 @@ class Puppetfile:
                 module.set_reference(reference)
                 return self._update_file_on_github(
                     f'- Update git module {name}')
+        raise ModuleNotFoundException
 
     def update_forge_module(self, name: str, version: str) -> None:
         for module in self._forge_modules:
