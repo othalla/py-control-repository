@@ -276,6 +276,30 @@ class TestPuppetfileAddForgeModule():
             puppetfile.add_forge_module('puppetlabs/apache')
 
 
+class TestPuppetfileUpdateGitModule:
+    @staticmethod
+    def test_it_update_a_git_module_in_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        git_module_apache = GitModule('apache',
+                                      'https://url/git/apache',
+                                      'ref',
+                                      'ed19f')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                git_modules=[git_module_apache])
+        assert puppetfile.git_modules[0].git_reference == 'ed19f'
+        puppetfile.update_git_module('apache', 'a76f6fb')
+        assert puppetfile.git_modules[0].git_reference == 'a76f6fb'
+        github_repository.update_file.assert_called_once_with(
+            "/Puppetfile",
+            "Update Puppetfile - Update git module apache",
+            "mod 'apache',\n  :git => 'https://url/git/apache',\n  :ref => 'a76f6fb'",
+            "shasha")
+
+
 class TestPuppetfileUpdateForgeModule:
     @staticmethod
     def test_it_update_a_module_in_the_puppetfile():

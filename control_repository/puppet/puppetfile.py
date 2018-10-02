@@ -82,6 +82,13 @@ class Puppetfile:
         self._forge_modules.append(module)
         self._update_file_on_github(f'- Add forge module {name}')
 
+    def update_git_module(self, name: str, reference: str) -> None:
+        for module in self._git_modules:
+            if name == module.name:
+                module.set_reference(reference)
+                return self._update_file_on_github(
+                    f'- Update git module {name}')
+
     def update_forge_module(self, name: str, version: str) -> None:
         for module in self._forge_modules:
             if name == module.name:
