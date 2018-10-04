@@ -13,7 +13,7 @@ class GitReferenceType(Enum):
     TAG = 'tag'
 
     @classmethod
-    def has_value(cls, value: str):
+    def has_value(cls, value: str) -> None:
         if value not in [reference_type.value for reference_type in cls]:
             raise AttributeError
 
@@ -71,8 +71,8 @@ class GitModule(PuppetModule):
         self._url: str = url
         if git_reference_type and not git_reference:
             raise ModuleMalformedException
-        if git_reference_type not in [None, 'ref', 'branch', 'tag', 'commit']:
-            raise ModuleBadGitReferenceTypeExcption
+        if git_reference_type:
+            GitReferenceType.has_value(git_reference_type)
         self._git_reference_type: Optional[str] = git_reference_type
         self._git_reference: Optional[str] = git_reference
 

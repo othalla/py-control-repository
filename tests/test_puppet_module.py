@@ -9,7 +9,7 @@ from control_repository.puppet_module import GitModule, ForgeModule
 class TestGitModule:
     @staticmethod
     def test_with_unknow_reference():
-        with pytest.raises(ModuleBadGitReferenceTypeExcption):
+        with pytest.raises(AttributeError):
             GitModule('nginx', 'https://url/repo/nginx.git', 'bad_reference',
                       'version')
 
