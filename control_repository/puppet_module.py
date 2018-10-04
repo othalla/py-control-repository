@@ -1,8 +1,21 @@
+from enum import Enum
 from typing import Any, List, Optional
 
 from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
                                            ModuleParserException,
                                            ModuleMalformedException)
+
+
+class GitReferenceType(Enum):
+    REF = 'ref'
+    COMMIT = 'commit'
+    BRANCH = 'branch'
+    TAG = 'tag'
+
+    @classmethod
+    def has_value(cls, value: str):
+        if value not in [reference_type.value for reference_type in cls]:
+            raise AttributeError
 
 
 class PuppetModule:
