@@ -1,8 +1,7 @@
 from enum import Enum
 from typing import Any, List, Optional
 
-from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
-                                           ModuleParserException,
+from control_repository.exceptions import (ModuleParserException,
                                            ModuleMalformedException)
 
 

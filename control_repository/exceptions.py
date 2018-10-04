@@ -54,7 +54,3 @@ class ModuleAlreadyPresentException(ControlRepositoryException):
     When a puppet module is already present in some puppetfile
     """
     pass
-
-
-class ModuleBadGitReferenceTypeExcption(Exception):
-    pass

@@ -1,7 +1,6 @@
 import pytest
 
-from control_repository.exceptions import (ModuleBadGitReferenceTypeExcption,
-                                           ModuleParserException,
+from control_repository.exceptions import (ModuleParserException,
                                            ModuleMalformedException)
 from control_repository.puppet_module import GitModule, ForgeModule
 
