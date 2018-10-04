@@ -304,6 +304,26 @@ class TestPuppetfileUpdateGitModule:
             "shasha")
 
     @staticmethod
+    def test_it_update_a_git_module_reference_and_reference_type():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        git_module_apache = GitModule('apache',
+                                      'https://url/git/apache',
+                                      'ref',
+                                      'ed19f')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                git_modules=[git_module_apache])
+        assert puppetfile.git_modules[0].git_reference == 'ed19f'
+        puppetfile.update_git_module('apache',
+                                     'master',
+                                     git_reference_type='branch')
+        assert puppetfile.git_modules[0].git_reference == 'master'
+        assert puppetfile.git_modules[0].git_reference_type == 'branch'
+
+    @staticmethod
     def test_it_cannot_update_a_missing_git_module():
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
