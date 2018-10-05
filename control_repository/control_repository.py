@@ -9,6 +9,19 @@ from control_repository.puppet.environment import Environment
 
 
 class ControlRepository:
+    """
+    This class represents a Puppet control repository hosted on github.
+
+    :type github_organization: string
+    :param github_organization: The name of the Github organization
+    :type github_repository_name: string
+    :param github_repository_name: The name of the Github repository
+    :type github_token: string
+    :param github_token: The Github token for authentication
+    :type github_baseurl: string
+    :param github_baseurl: The url of the Github server
+    """
+
     def __init__(self, github_organization: str,
                  github_repository_name: str,
                  github_token: str,
@@ -20,6 +33,14 @@ class ControlRepository:
         self._github_repository: Repository = self._get_github_repository()
 
     def get_environment(self, environment: str) -> Environment:
+        """
+        This class represents a Puppet environment.
+
+        :type environment: string
+        :param environment: The name of the Puppet environment
+        :rtype: :class:`control_repository.puppet.environment.Environment`
+        :return: Puppet Environment object
+        """
         try:
             self._github_repository.get_branch(environment)
         except GithubException:
