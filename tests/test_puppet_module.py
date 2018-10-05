@@ -126,7 +126,7 @@ class TestGitModuleSetReference:
                                git_reference='test')
         assert git_module.git_reference == 'test'
         assert git_module.git_reference_type == 'branch'
-        git_module.set_reference('1.0.0', git_reference_type='tag')
+        git_module.set_reference('1.0.0', reference_type='tag')
         assert git_module.git_reference == '1.0.0'
         assert git_module.git_reference_type == 'tag'
 
