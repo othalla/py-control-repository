@@ -64,16 +64,16 @@ class GitModule(PuppetModule):
     def __init__(self,
                  name: str,
                  url: str,
-                 git_reference_type: Optional[str] = None,
-                 git_reference: Optional[str] = None) -> None:
+                 reference_type: Optional[str] = None,
+                 reference: Optional[str] = None) -> None:
         super(GitModule, self).__init__(name)
         self._url: str = url
-        if git_reference_type and not git_reference:
+        if reference_type and not reference:
             raise ModuleMalformedException
-        if git_reference_type:
-            GitReferenceType.has_value(git_reference_type)
-        self._git_reference_type: Optional[str] = git_reference_type
-        self._git_reference: Optional[str] = git_reference
+        if reference_type:
+            GitReferenceType.has_value(reference_type)
+        self._reference_type: Optional[str] = reference_type
+        self._reference: Optional[str] = reference
 
     @property
     def git_url(self) -> str:
@@ -81,25 +81,25 @@ class GitModule(PuppetModule):
 
     @property
     def git_reference_type(self) -> Optional[str]:
-        return self._git_reference_type
+        return self._reference_type
 
     @property
     def git_reference(self) -> Optional[str]:
-        return self._git_reference
+        return self._reference
 
     def set_reference(self,
                       reference: str,
                       reference_type: Optional[str] = None) -> None:
         if reference_type:
-            self._git_reference_type = reference_type
-        self._git_reference = reference
+            self._reference_type = reference_type
+        self._reference = reference
 
     def __str__(self) -> str:
-        if self._git_reference and self._git_reference_type:
+        if self._reference and self._reference_type:
             return (
                 f"mod '{self._name}',\n"
                 f"  :git => '{self._url}',\n"
-                f"  :{self._git_reference_type} => '{self._git_reference}'"
+                f"  :{self._reference_type} => '{self._reference}'"
             )
         return (
             f"mod '{self._name}',\n"
@@ -126,5 +126,5 @@ class GitModule(PuppetModule):
                     reference = line.split("'")[1]
         if not url:
             raise ModuleParserException
-        return GitModule(name, url, git_reference_type=reference_type,
-                         git_reference=reference)
+        return GitModule(name, url, reference_type=reference_type,
+                         reference=reference)

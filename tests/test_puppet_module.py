@@ -17,7 +17,7 @@ class TestGitModule:
         with pytest.raises(ModuleMalformedException):
             GitModule('nginx',
                       'https://url/repo/nginx.git',
-                      git_reference_type='branch')
+                      reference_type='branch')
 
 
 class TestGitModuleFromLines:
@@ -94,8 +94,8 @@ class TestGitModuleToString:
     def test_it_convert_a_git_module_with_references_to_string():
         git_module = GitModule('apache',
                                'https://url/to/git/apache',
-                               git_reference_type='branch',
-                               git_reference='test')
+                               reference_type='branch',
+                               reference='test')
         assert str(git_module) == ("mod 'apache',\n"
                                    "  :git => 'https://url/to/git/apache',\n"
                                    "  :branch => 'test'")
@@ -112,8 +112,8 @@ class TestGitModuleSetReference:
     def test_it_change_git_module_reference():
         git_module = GitModule('apache',
                                'https://url/to/git/apache',
-                               git_reference_type='branch',
-                               git_reference='test')
+                               reference_type='branch',
+                               reference='test')
         assert git_module.git_reference == 'test'
         git_module.set_reference('newtest')
         assert git_module.git_reference == 'newtest'
@@ -122,8 +122,8 @@ class TestGitModuleSetReference:
     def test_it_update_both_reference_and_reference_type_if_supplied():
         git_module = GitModule('apache',
                                'https://url/to/git/apache',
-                               git_reference_type='branch',
-                               git_reference='test')
+                               reference_type='branch',
+                               reference='test')
         assert git_module.git_reference == 'test'
         assert git_module.git_reference_type == 'branch'
         git_module.set_reference('1.0.0', reference_type='tag')

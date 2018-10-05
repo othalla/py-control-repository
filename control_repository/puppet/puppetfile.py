@@ -64,8 +64,8 @@ class Puppetfile:
                        url: str,
                        reference_type: Optional[str] = None,
                        reference: Optional[str] = None) -> None:
-        module = GitModule(name, url, git_reference_type=reference_type,
-                           git_reference=reference)
+        module = GitModule(name, url, reference_type=reference_type,
+                           reference=reference)
         for module in self._git_modules:
             if name == module.name:
                 raise ModuleAlreadyPresentException
