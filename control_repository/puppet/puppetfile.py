@@ -84,11 +84,11 @@ class Puppetfile:
 
     def update_git_module(self, name: str,
                           reference: str,
-                          git_reference_type: Optional[str] = None) -> None:
+                          reference_type: Optional[str] = None) -> None:
         for module in self._git_modules:
             if name == module.name:
                 module.set_reference(reference,
-                                     reference_type=git_reference_type)
+                                     reference_type=reference_type)
                 return self._update_file_on_github(
                     f'- Update git module {name}')
         raise ModuleNotFoundException

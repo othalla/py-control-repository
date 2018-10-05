@@ -319,7 +319,7 @@ class TestPuppetfileUpdateGitModule:
         assert puppetfile.git_modules[0].git_reference == 'ed19f'
         puppetfile.update_git_module('apache',
                                      'master',
-                                     git_reference_type='branch')
+                                     reference_type='branch')
         assert puppetfile.git_modules[0].git_reference == 'master'
         assert puppetfile.git_modules[0].git_reference_type == 'branch'
 
