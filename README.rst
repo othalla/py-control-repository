@@ -96,3 +96,20 @@ You can specify a specific git reference. Supported are :
                              'https://url.my.git/orga/custom_module',
                              reference_type='commit',
                              reference='ae1fe')
+
+Update a git module
+~~~~~~~~~~~~~~~~~~~
+
+Bump module version
+
+.. code-block:: python
+
+   puppetfile.update_git_module('mymodule', '12.0.2')
+
+You can also change a module reference type and its value.
+
+For example you have a module deployed by its master branch and want to track it by a specific tag.
+
+.. code-block:: python
+
+   puppetfile.update_git_module('mymodule', '1.0.0', reference_type='tag')
