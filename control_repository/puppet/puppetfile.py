@@ -102,18 +102,17 @@ class Puppetfile:
         raise ModuleNotFoundException
 
     def _update_file_on_github(self, source: str) -> None:
-        new_content = self._to_string()
         try:
             update_result = self._github_repository.update_file(
                 "/Puppetfile",
                 f'Update Puppetfile {source}',
-                new_content,
+                str(self),
                 self._sha)
         except GithubException:
             raise PuppetfileUpdateException
         self._sha = update_result['content'].sha
 
-    def _to_string(self) -> str:
+    def __str__(self) -> str:
         content: str = ''
         if self.forge_url:
             content = f"forge '{self._forge_url}'"
