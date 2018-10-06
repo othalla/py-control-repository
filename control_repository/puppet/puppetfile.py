@@ -11,6 +11,25 @@ from control_repository.puppet_module import ForgeModule, GitModule
 
 
 class Puppetfile:
+    """
+    This class represents a Puppetfile
+
+    :type github_repository: :class:`github.Repository.Repository`
+    :param github_repository: The PyGithub Repository object.
+    :type environment: string
+    :param environment: The name of the Puppet environment.
+    :type sha: string
+    :param sha: The git file sha of the Puppetfile.
+    :type forge_modules: list of
+                         :class:`control_repository.puppet_module.ForgeModule`
+    :param forge_modules: A list of Puppet forge modules.
+    :type git_modules: list of
+                       :class:`control_repository.puppet_module.GitModule`
+    :param git_modules: A list of Puppet git modules.
+    :type sha: string
+    :param sha: The url of the Puppet forge used to download modules.
+    """
+
     def __init__(self,
                  github_repository: Repository,
                  environment: str,
@@ -29,18 +48,30 @@ class Puppetfile:
 
     @property
     def sha(self) -> Optional[str]:
+        """
+        :type: string
+        """
         return self._sha
 
     @property
     def forge_modules(self) -> List[ForgeModule]:
+        """
+        :type: list of :class:`control_repository.puppet_module.ForgeModule`
+        """
         return self._forge_modules
 
     @property
     def git_modules(self) -> List[GitModule]:
+        """
+        :type: list of :class:`control_repository.puppet_module.GitModule`
+        """
         return self._git_modules
 
     @property
     def forge_url(self) -> Optional[str]:
+        """
+        :type: string
+        """
         return self._forge_url
 
     def list_modules(self) -> Optional[List[str]]:
