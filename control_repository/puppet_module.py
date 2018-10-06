@@ -16,6 +16,10 @@ class GitReferenceType(Enum):
         if value not in [reference_type.value for reference_type in cls]:
             raise AttributeError
 
+    @classmethod
+    def values(cls) -> List[str]:
+        return [reference_type.value for reference_type in cls]
+
 
 class PuppetModule:
     def __init__(self, name: str) -> None:
