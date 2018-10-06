@@ -126,5 +126,7 @@ class GitModule(PuppetModule):
                     reference = line.split("'")[1]
         if not url:
             raise ModuleParserException
-        return GitModule(name, url, reference_type=reference_type,
-                         reference=reference)
+        return cls(name,
+                   url,
+                   reference_type=reference_type,
+                   reference=reference)
