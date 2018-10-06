@@ -13,7 +13,7 @@ class GitReferenceType(Enum):
 
     @classmethod
     def has_value(cls, value: str) -> None:
-        if value not in [reference_type.value for reference_type in cls]:
+        if value not in cls.values():
             raise AttributeError
 
     @classmethod
