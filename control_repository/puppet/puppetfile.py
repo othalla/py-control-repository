@@ -75,6 +75,12 @@ class Puppetfile:
         return self._forge_url
 
     def list_modules(self) -> Optional[List[str]]:
+        """
+        List all Puppet git and forge modules names present in the Puppetfile.
+
+        :rtype: None or list of string
+        :return: The list of Puppet modules in the Puppetfile.
+        """
         module_list: List[str] = []
         for forge_module in self._forge_modules:
             module_list.append(forge_module.name)
@@ -83,10 +89,19 @@ class Puppetfile:
         return module_list
 
     def set_forge_url(self, url: str) -> None:
+        """
+        Set the url used to download Puppet forge modules.
+
+        :type: string
+        :param: The url of the Puppet forge.
+        """
         self._forge_url = url
         self._update_file_on_github('forge URL')
 
     def remove_forge_url(self) -> None:
+        """
+        Remove the url used to download Puppet forge modules.
+        """
         self._forge_url = None
         self._update_file_on_github('- Remove forge URL')
 
