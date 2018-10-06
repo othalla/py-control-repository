@@ -30,7 +30,7 @@ Get Puppet Environment
 
    control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
 
-   puppet_environment = control_repository.get_environent('production')
+   puppet_environment = control_repository.get_environment('production')
 
 Get Puppetfile
 ~~~~~~~~~~~~~~
