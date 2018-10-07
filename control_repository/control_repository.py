@@ -35,7 +35,7 @@ class ControlRepository:
 
     def get_environment(self, environment: str) -> Environment:
         """
-        This class represents a Puppet environment.
+        Returns a Puppet environment.
 
         :type environment: string
         :param environment: The name of the Puppet environment
