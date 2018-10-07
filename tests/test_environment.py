@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from control_repository.exceptions import PuppetfileNotFoundException
-from control_repository.puppet.environment import Environment
+from control_repository.environment import Environment
 from control_repository.puppet.puppetfile import Puppetfile
 
 

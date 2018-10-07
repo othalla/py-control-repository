@@ -5,7 +5,7 @@ from github.Repository import Repository
 
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
-from control_repository.puppet.environment import Environment
+from control_repository.environment import Environment
 
 
 class ControlRepository:
@@ -39,7 +39,7 @@ class ControlRepository:
 
         :type environment: string
         :param environment: The name of the Puppet environment
-        :rtype: :class:`control_repository.puppet.environment.Environment`
+        :rtype: :class:`control_repository.environment.Environment`
         :return: Puppet Environment object
         """
         try:
@@ -52,8 +52,7 @@ class ControlRepository:
         """
         Returns the list of all Puppet environments in the control repository.
 
-        :rtype: list of
-                :class:`control_repository.puppet.environment.Environment`
+        :rtype: list of :class:`control_repository.environment.Environment`
         :return: the list of Puppet Environment object
         """
         branches = self._github_repository.get_branches()
