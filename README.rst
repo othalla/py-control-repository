@@ -52,7 +52,7 @@ Returns the list of all Puppet Environment names.
 
    control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
 
-   puppet_environments = control_repository.get_environment_names()
+   puppet_environment_names = control_repository.get_environment_names()
 
 Get Puppetfile
 ~~~~~~~~~~~~~~
