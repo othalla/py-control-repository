@@ -22,7 +22,8 @@ class ControlRepository:
     :param github_baseurl: The url of the Github server
     """
 
-    def __init__(self, github_organization: str,
+    def __init__(self,
+                 github_organization: str,
                  github_repository_name: str,
                  github_token: str,
                  github_baseurl: Optional[str] = None) -> None:
