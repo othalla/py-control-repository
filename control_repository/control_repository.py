@@ -63,7 +63,7 @@ class ControlRepository:
                                             self._github_repository))
         return environments
 
-    def list_environments(self) -> List[str]:
+    def get_environment_names(self) -> List[str]:
         """
         Returns the list of all environments names.
 

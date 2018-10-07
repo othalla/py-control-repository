@@ -53,10 +53,10 @@ class TestControlRepositoryGetEnvironment:
             control_repository.get_environment('environment')
 
 
-class TestControlRepositoryListEnvironments:
+class TestControlRepositoryGetEnvironmentNames:
     @staticmethod
     @patch('control_repository.control_repository.Github')
-    def test_it_returns_the_list_of_environment(github):
+    def test_it_returns_the_list_of_environment_names(github):
         control_repository = ControlRepository('test_organization',
                                                'test_repository',
                                                'some-token')
@@ -66,7 +66,7 @@ class TestControlRepositoryListEnvironments:
         branch_dev.configure_mock(name='dev')
         branch_prd.configure_mock(name='prd')
         repository.get_branches.return_value = [branch_dev, branch_prd]
-        environment_list = control_repository.list_environments()
+        environment_list = control_repository.get_environment_names()
         assert sorted(environment_list) == sorted(['prd', 'dev'])
 
 
