@@ -68,3 +68,23 @@ class TestControlRepositoryListEnvironments:
         repository.get_branches.return_value = [branch_dev, branch_prd]
         environment_list = control_repository.list_environments()
         assert sorted(environment_list) == sorted(['prd', 'dev'])
+
+
+class TestControlRepositoryGetEnvironments:
+    @staticmethod
+    @patch('control_repository.control_repository.Github')
+    def test_it_returns_all_puppet_environments(github):
+        control_repository = ControlRepository('test_organization',
+                                               'test_repository',
+                                               'some-token')
+        repository = github().get_organization().get_repo()
+        branch_dev = MagicMock()
+        branch_prd = MagicMock()
+        branch_dev.configure_mock(name='dev')
+        branch_prd.configure_mock(name='prd')
+        repository.get_branches.return_value = [branch_dev, branch_prd]
+        puppet_environments = control_repository.get_environments()
+        assert isinstance(puppet_environments[0], Environment)
+        assert puppet_environments[0].name == 'dev'
+        assert isinstance(puppet_environments[1], Environment)
+        assert puppet_environments[1].name == 'prd'

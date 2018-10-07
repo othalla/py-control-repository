@@ -48,6 +48,21 @@ class ControlRepository:
             raise EnvironmentNotFoundException
         return Environment(environment, self._github_repository)
 
+    def get_environments(self) -> List[Environment]:
+        """
+        Returns the list of all Puppet environments in the control repository.
+
+        :rtype: list of
+                :class:`control_repository.puppet.environment.Environment`
+        :return: the list of Puppet Environment object
+        """
+        branches = self._github_repository.get_branches()
+        environments = []
+        for branch in branches:
+            environments.append(Environment(branch.name,
+                                            self._github_repository))
+        return environments
+
     def list_environments(self) -> List[str]:
         """
         Returns the list of all environments names..
