@@ -65,7 +65,7 @@ class ControlRepository:
 
     def list_environments(self) -> List[str]:
         """
-        Returns the list of all environments names..
+        Returns the list of all environments names.
 
         :rtype: list of string
         :return: the list of environments names.
