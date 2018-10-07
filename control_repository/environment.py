@@ -1,6 +1,6 @@
 from github.Repository import Repository
 
-from control_repository.puppet.puppetfile import Puppetfile
+from control_repository.puppetfile import Puppetfile
 
 
 class Environment:
@@ -28,7 +28,7 @@ class Environment:
         """
         Retrieve the puppetfile present in the current Puppet environment.
 
-        :rtype: :class:`control_repository.puppet.puppetfile.Puppetfile`
+        :rtype: :class:`control_repository.puppetfile.Puppetfile`
         :return: A Puppet Puppetfile object
         """
         return Puppetfile.from_github_repository(self._github_repository,

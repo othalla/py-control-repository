@@ -8,7 +8,7 @@ from control_repository.exceptions import (PuppetfileNotFoundException,
                                            ModuleAlreadyPresentException,
                                            ModuleNotFoundException)
 from control_repository.puppet_module import ForgeModule, GitModule
-from control_repository.puppet.puppetfile import Puppetfile
+from control_repository.puppetfile import Puppetfile
 
 
 class TestPuppetfile:

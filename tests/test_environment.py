@@ -4,7 +4,7 @@ import pytest
 
 from control_repository.exceptions import PuppetfileNotFoundException
 from control_repository.environment import Environment
-from control_repository.puppet.puppetfile import Puppetfile
+from control_repository.puppetfile import Puppetfile
 
 
 class TestEnvironmentGetPuppetfile:
