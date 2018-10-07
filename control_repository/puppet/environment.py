@@ -17,6 +17,13 @@ class Environment:
         self._name: str = name
         self._github_repository: Repository = github_repository
 
+    @property
+    def name(self) -> str:
+        """
+        :type: string
+        """
+        return self._name
+
     def get_puppetfile(self) -> Puppetfile:
         """
         Retrieve the puppetfile present in the current Puppet environment.
