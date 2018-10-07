@@ -2,7 +2,7 @@ import pytest
 
 from control_repository.exceptions import (ModuleParserException,
                                            ModuleMalformedException)
-from control_repository.puppet_module import GitModule, ForgeModule
+from control_repository.modules import GitModule, ForgeModule
 
 
 class TestGitModule:

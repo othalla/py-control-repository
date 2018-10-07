@@ -7,7 +7,7 @@ from control_repository.exceptions import (PuppetfileNotFoundException,
                                            PuppetfileUpdateException,
                                            ModuleAlreadyPresentException,
                                            ModuleNotFoundException)
-from control_repository.puppet_module import ForgeModule, GitModule
+from control_repository.modules import ForgeModule, GitModule
 
 
 class Puppetfile:
@@ -21,10 +21,9 @@ class Puppetfile:
     :type sha: string
     :param sha: The git file sha of the Puppetfile.
     :type forge_modules: list of
-                         :class:`control_repository.puppet_module.ForgeModule`
+                         :class:`control_repository.modules.ForgeModule`
     :param forge_modules: A list of Puppet forge modules.
-    :type git_modules: list of
-                       :class:`control_repository.puppet_module.GitModule`
+    :type git_modules: list of :class:`control_repository.modules.GitModule`
     :param git_modules: A list of Puppet git modules.
     :type sha: string
     :param sha: The url of the Puppet forge used to download modules.
@@ -56,14 +55,14 @@ class Puppetfile:
     @property
     def forge_modules(self) -> List[ForgeModule]:
         """
-        :type: list of :class:`control_repository.puppet_module.ForgeModule`
+        :type: list of :class:`control_repository.modules.ForgeModule`
         """
         return self._forge_modules
 
     @property
     def git_modules(self) -> List[GitModule]:
         """
-        :type: list of :class:`control_repository.puppet_module.GitModule`
+        :type: list of :class:`control_repository.modules.GitModule`
         """
         return self._git_modules
 
