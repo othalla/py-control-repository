@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from github import Github, GithubException
 from github.Repository import Repository
@@ -47,6 +47,16 @@ class ControlRepository:
         except GithubException:
             raise EnvironmentNotFoundException
         return Environment(environment, self._github_repository)
+
+    def list_environments(self) -> List[str]:
+        """
+        Returns the list of all environments names..
+
+        :rtype: list of string
+        :return: the list of environments names.
+        """
+        branches = self._github_repository.get_branches()
+        return [branch.name for branch in branches]
 
     def _get_github_repository(self) -> Repository:
         try:
