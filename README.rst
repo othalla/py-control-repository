@@ -43,6 +43,17 @@ Returns the list of all Puppet Environments.
 
    puppet_environments = control_repository.get_environments()
 
+Get all Puppet Environments names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Returns the list of all Puppet Environments names.
+
+.. code-block:: python
+
+   control_repository = ControlRepository('myorga', 'my_control_repository', 'token')
+
+   puppet_environments = control_repository.list_environments()
+
 Get Puppetfile
 ~~~~~~~~~~~~~~
 
