@@ -32,10 +32,10 @@ Get Puppet Environment
 
    puppet_environment = control_repository.get_environment('production')
 
-Get all Puppet Environments
+Get all Puppet Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Returns the list of all Puppet Environments.
+Returns the list of all Puppet Environment.
 
 .. code-block:: python
 
@@ -43,7 +43,7 @@ Returns the list of all Puppet Environments.
 
    puppet_environments = control_repository.get_environments()
 
-Get all Puppet Environments names
+Get all Puppet Environment names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Returns the list of all Puppet Environments names.
