@@ -292,9 +292,9 @@ class TestPuppetfileUpdateGitModule:
                                 'env',
                                 sha='shasha',
                                 git_modules=[git_module_apache])
-        assert puppetfile.git_modules[0].git_reference == 'ed19f'
+        assert puppetfile.git_modules[0].reference == 'ed19f'
         puppetfile.update_git_module('apache', 'a76f6fb')
-        assert puppetfile.git_modules[0].git_reference == 'a76f6fb'
+        assert puppetfile.git_modules[0].reference == 'a76f6fb'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
             "Puppetfile - Update git module apache from ed19f to a76f6fb",
@@ -316,12 +316,12 @@ class TestPuppetfileUpdateGitModule:
                                 'env',
                                 sha='shasha',
                                 git_modules=[git_module_apache])
-        assert puppetfile.git_modules[0].git_reference == 'ed19f'
+        assert puppetfile.git_modules[0].reference == 'ed19f'
         puppetfile.update_git_module('apache',
                                      'master',
                                      reference_type='branch')
-        assert puppetfile.git_modules[0].git_reference == 'master'
-        assert puppetfile.git_modules[0].git_reference_type == 'branch'
+        assert puppetfile.git_modules[0].reference == 'master'
+        assert puppetfile.git_modules[0].reference_type == 'branch'
 
     @staticmethod
     def test_it_cannot_update_a_missing_git_module():

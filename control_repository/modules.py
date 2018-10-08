@@ -84,11 +84,11 @@ class GitModule(PuppetModule):
         return self._url
 
     @property
-    def git_reference_type(self) -> Optional[str]:
+    def reference_type(self) -> Optional[str]:
         return self._reference_type
 
     @property
-    def git_reference(self) -> Optional[str]:
+    def reference(self) -> Optional[str]:
         return self._reference
 
     def set_reference(self,

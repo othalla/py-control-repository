@@ -174,7 +174,7 @@ class Puppetfile:
         for module in self._git_modules:
             if name == module.name:
                 commit_message = (f'Update git module {name} from '
-                                  f'{module.git_reference} to {reference}')
+                                  f'{module.reference} to {reference}')
                 module.set_reference(reference,
                                      reference_type=reference_type)
                 return self._update_file_on_github(commit_message)

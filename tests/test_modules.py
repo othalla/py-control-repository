@@ -29,8 +29,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type is None
-        assert git_module.git_reference is None
+        assert git_module.reference_type is None
+        assert git_module.reference is None
 
     @staticmethod
     def test_with_ref_reference_type_returns_git_module():
@@ -41,8 +41,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == 'ref'
-        assert git_module.git_reference == '0adqs1'
+        assert git_module.reference_type == 'ref'
+        assert git_module.reference == '0adqs1'
 
     @staticmethod
     def test_with_branch_reference_type_returns_git_module():
@@ -53,8 +53,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == 'branch'
-        assert git_module.git_reference == 'branchname'
+        assert git_module.reference_type == 'branch'
+        assert git_module.reference == 'branchname'
 
     @staticmethod
     def test_with_tag_reference_type_returns_git_module():
@@ -65,8 +65,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == 'tag'
-        assert git_module.git_reference == '0.1.1'
+        assert git_module.reference_type == 'tag'
+        assert git_module.reference == '0.1.1'
 
     @staticmethod
     def test_with_commit_reference_type_returns_git_module():
@@ -77,8 +77,8 @@ class TestGitModuleFromLines:
              ])
         assert git_module.name == 'apache'
         assert git_module.git_url == 'https://github.com/puppet/apache'
-        assert git_module.git_reference_type == 'commit'
-        assert git_module.git_reference == '0dfa12'
+        assert git_module.reference_type == 'commit'
+        assert git_module.reference == '0dfa12'
 
     @staticmethod
     def test_with_missing_git_url():
@@ -114,9 +114,9 @@ class TestGitModuleSetReference:
                                'https://url/to/git/apache',
                                reference_type='branch',
                                reference='test')
-        assert git_module.git_reference == 'test'
+        assert git_module.reference == 'test'
         git_module.set_reference('newtest')
-        assert git_module.git_reference == 'newtest'
+        assert git_module.reference == 'newtest'
 
     @staticmethod
     def test_it_update_both_reference_and_reference_type_if_supplied():
@@ -124,11 +124,11 @@ class TestGitModuleSetReference:
                                'https://url/to/git/apache',
                                reference_type='branch',
                                reference='test')
-        assert git_module.git_reference == 'test'
-        assert git_module.git_reference_type == 'branch'
+        assert git_module.reference == 'test'
+        assert git_module.reference_type == 'branch'
         git_module.set_reference('1.0.0', reference_type='tag')
-        assert git_module.git_reference == '1.0.0'
-        assert git_module.git_reference_type == 'tag'
+        assert git_module.reference == '1.0.0'
+        assert git_module.reference_type == 'tag'
 
 
 class TestForgeModuleToString:
