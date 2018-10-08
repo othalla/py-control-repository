@@ -89,10 +89,10 @@ class Puppetfile:
 
     def set_forge_url(self, url: str) -> None:
         """
-        Set the url used to download Puppet forge modules.
+        Add or update the Puppetfile URL used to download Puppet forge modules.
 
         :type url: string
-        :param url: The url of the Puppet forge.
+        :param url: The url of the Puppet forge used in the Puppetfile.
         """
         self._forge_url = url
         self._update_file_on_github('Add forge URL')
