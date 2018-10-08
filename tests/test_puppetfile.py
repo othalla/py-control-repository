@@ -350,7 +350,8 @@ class TestPuppetfileUpdateForgeModule:
         assert puppetfile.forge_modules[0].version == '0.1.2'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Puppetfile - Update forge module puppetlabs/apache",
+            ("Puppetfile - Update forge module puppetlabs/apache "
+             "from 0.1.1 to 0.1.2"),
             "mod 'puppetlabs/apache', '0.1.2'",
             "shasha")
 

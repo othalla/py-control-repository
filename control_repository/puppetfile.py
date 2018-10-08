@@ -193,9 +193,10 @@ class Puppetfile:
         """
         for module in self._forge_modules:
             if name == module.name:
+                commit_message = (f'Update forge module {name} from '
+                                  f'{module.version} to {version}')
                 module.set_version(version)
-                return self._update_file_on_github(
-                    f'Update forge module {name}')
+                return self._update_file_on_github(commit_message)
         raise ModuleNotFoundException
 
     def _update_file_on_github(self, source: str) -> None:
