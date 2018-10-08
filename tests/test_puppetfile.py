@@ -149,7 +149,7 @@ class TestPuppetfileSetForgeurl:
         assert puppetfile.forge_url == 'https://url/to/forge'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Puppetfile - forge URL",
+            "Puppetfile - Add forge URL",
             "forge 'https://url/to/forge'",
             "shasha")
 

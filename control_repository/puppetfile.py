@@ -95,7 +95,7 @@ class Puppetfile:
         :param url: The url of the Puppet forge.
         """
         self._forge_url = url
-        self._update_file_on_github('forge URL')
+        self._update_file_on_github('Add forge URL')
 
     def remove_forge_url(self) -> None:
         """
