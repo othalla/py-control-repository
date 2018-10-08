@@ -224,7 +224,7 @@ class TestPuppetfileAddGitModule:
         assert git_module_apache in puppetfile.git_modules
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Puppetfile - Update git module apache",
+            "Puppetfile - Add git module apache",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
              "  :ref => 'ed19f'"),
