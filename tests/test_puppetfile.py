@@ -297,7 +297,7 @@ class TestPuppetfileUpdateGitModule:
         assert puppetfile.git_modules[0].git_reference == 'a76f6fb'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Puppetfile - Update git module apache",
+            "Puppetfile - Update git module apache from ed19f to a76f6fb",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
              "  :ref => 'a76f6fb'"),
