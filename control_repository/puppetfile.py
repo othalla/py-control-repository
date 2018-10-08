@@ -157,6 +157,20 @@ class Puppetfile:
     def update_git_module(self, name: str,
                           reference: str,
                           reference_type: Optional[str] = None) -> None:
+        """
+        Update an existing Puppet git module preset in the Puppetfile.
+
+        :type name: string
+        :param name: The name of the Puppet git module to update in the
+                     Puppetfile.
+        :type reference: string
+        :param reference: The git reference of the Puppet git module to
+                          update in the Puppetfile.
+        :type reference_type: string
+        :param reference_type: The git reference type (ref, commit, branch,
+                               tag) of the Puppet git module to update in the
+                               Puppetfile.
+        """
         for module in self._git_modules:
             if name == module.name:
                 module.set_reference(reference,
@@ -166,6 +180,16 @@ class Puppetfile:
         raise ModuleNotFoundException
 
     def update_forge_module(self, name: str, version: str) -> None:
+        """
+        Update an existing Puppet forge module present in the Puppetfile.
+
+        :type name: string
+        :param name: The name of the Puppet forge module to update in the
+                     Puppetfile.
+        :type version: string
+        :param version: The version of the Puppet forge module to update in the
+                        Puppetfile.
+        """
         for module in self._forge_modules:
             if name == module.name:
                 module.set_version(version)
