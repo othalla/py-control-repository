@@ -102,7 +102,7 @@ class Puppetfile:
         Remove the url used to download Puppet forge modules.
         """
         self._forge_url = None
-        self._update_file_on_github('- Remove forge URL')
+        self._update_file_on_github('Remove forge URL')
 
     def add_git_module(self,
                        name: str,
@@ -132,7 +132,7 @@ class Puppetfile:
             if name == module.name:
                 raise ModuleAlreadyPresentException
         self._git_modules.append(module)
-        self._update_file_on_github(f'- Update git module {name}')
+        self._update_file_on_github(f'Update git module {name}')
 
     def add_forge_module(self,
                          name: str,
@@ -152,7 +152,7 @@ class Puppetfile:
             if name == module.name:
                 raise ModuleAlreadyPresentException
         self._forge_modules.append(module)
-        self._update_file_on_github(f'- Add forge module {name}')
+        self._update_file_on_github(f'Add forge module {name}')
 
     def update_git_module(self, name: str,
                           reference: str,
@@ -175,8 +175,7 @@ class Puppetfile:
             if name == module.name:
                 module.set_reference(reference,
                                      reference_type=reference_type)
-                return self._update_file_on_github(
-                    f'- Update git module {name}')
+                return self._update_file_on_github(f'Update git module {name}')
         raise ModuleNotFoundException
 
     def update_forge_module(self, name: str, version: str) -> None:
@@ -194,14 +193,14 @@ class Puppetfile:
             if name == module.name:
                 module.set_version(version)
                 return self._update_file_on_github(
-                    f'- Update forge module {name}')
+                    f'Update forge module {name}')
         raise ModuleNotFoundException
 
     def _update_file_on_github(self, source: str) -> None:
         try:
             update_result = self._github_repository.update_file(
                 "/Puppetfile",
-                f'Update Puppetfile {source}',
+                f'Puppetfile - {source}',
                 str(self),
                 self._sha)
         except GithubException:

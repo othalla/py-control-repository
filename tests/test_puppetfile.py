@@ -149,7 +149,7 @@ class TestPuppetfileSetForgeurl:
         assert puppetfile.forge_url == 'https://url/to/forge'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile forge URL",
+            "Puppetfile - forge URL",
             "forge 'https://url/to/forge'",
             "shasha")
 
@@ -187,7 +187,7 @@ class TestPuppetfileRemoveForgeurl:
         assert puppetfile.forge_url is None
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile - Remove forge URL",
+            "Puppetfile - Remove forge URL",
             "",
             "shasha")
 
@@ -224,7 +224,7 @@ class TestPuppetfileAddGitModule:
         assert git_module_apache in puppetfile.git_modules
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile - Update git module apache",
+            "Puppetfile - Update git module apache",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
              "  :ref => 'ed19f'"),
@@ -260,7 +260,7 @@ class TestPuppetfileAddForgeModule:
         assert forge_module_apache in puppetfile.forge_modules
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile - Add forge module puppetlabs/apache",
+            "Puppetfile - Add forge module puppetlabs/apache",
             "mod 'puppetlabs/apache', '0.1.10'",
             "shasha")
 
@@ -297,7 +297,7 @@ class TestPuppetfileUpdateGitModule:
         assert puppetfile.git_modules[0].git_reference == 'a76f6fb'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile - Update git module apache",
+            "Puppetfile - Update git module apache",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
              "  :ref => 'a76f6fb'"),
@@ -350,7 +350,7 @@ class TestPuppetfileUpdateForgeModule:
         assert puppetfile.forge_modules[0].version == '0.1.2'
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
-            "Update Puppetfile - Update forge module puppetlabs/apache",
+            "Puppetfile - Update forge module puppetlabs/apache",
             "mod 'puppetlabs/apache', '0.1.2'",
             "shasha")
 
