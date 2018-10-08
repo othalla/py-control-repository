@@ -91,8 +91,8 @@ class Puppetfile:
         """
         Set the url used to download Puppet forge modules.
 
-        :type: string
-        :param: The url of the Puppet forge.
+        :type url: string
+        :param url: The url of the Puppet forge.
         """
         self._forge_url = url
         self._update_file_on_github('forge URL')
@@ -109,6 +109,23 @@ class Puppetfile:
                        url: str,
                        reference_type: Optional[str] = None,
                        reference: Optional[str] = None) -> None:
+        """
+        Add a Puppet git module to the Puppetfile.
+
+        :type name: string
+        :param name: The name of the Puppet git module to add to the
+                     Puppetfile.
+        :type url: string
+        :param url: The git URL of the Puppet git module to add to the
+                    Puppetfile.
+        :type reference_type: string
+        :param reference_type: The git reference type (ref, commit, branch,
+                               tag) of the Puppet git module to add to the
+                               Puppetfile.
+        :type reference: string
+        :param reference: The git reference of the Puppet git module to
+                          add to the Puppetfile.
+        """
         module = GitModule(name, url, reference_type=reference_type,
                            reference=reference)
         for module in self._git_modules:
@@ -120,6 +137,16 @@ class Puppetfile:
     def add_forge_module(self,
                          name: str,
                          version: Optional[str] = None) -> None:
+        """
+        Add a Puppet forge module to the Puppetfile.
+
+        :type name: string
+        :param name: The name of the Puppet forge module to add to the
+                     Puppetfile.
+        :type version: string
+        :param version: The version of the Puppet forge module to add to the
+                        Puppetfile.
+        """
         module = ForgeModule(name, version=version)
         for module in self._forge_modules:
             if name == module.name:
