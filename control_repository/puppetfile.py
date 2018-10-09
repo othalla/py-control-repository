@@ -231,7 +231,7 @@ class Puppetfile:
         forge_url = None
         forge_modules = []
         git_modules = []
-        splitted_content = decoded_content.split('\n')
+        splitted_content = decoded_content.replace('"', "'").split('\n')
         for index, line in enumerate(splitted_content):
             if line.startswith('forge '):
                 forge_url = line.split('\'')[1]
