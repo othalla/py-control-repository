@@ -37,16 +37,6 @@ class TestPuppetfileFromGitubRepository:
         assert puppetfile.sha == 'shasha'
 
     @staticmethod
-    def test_it_returns_a_puppetfile_with_a_forge_url():
-        github_repository = MagicMock()
-        content = github_repository.get_file_contents()
-        content.decoded_content.decode.return_value = (
-            "forge 'https://urlto/forge'\n"
-        )
-        puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
-        assert puppetfile.forge_url == 'https://urlto/forge'
-
-    @staticmethod
     def test_it_returns_a_puppetfile_with_both_git_and_forge_modules():
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
@@ -91,74 +81,6 @@ class TestPuppetfileFromGitubRepository:
         assert forge_module_apache in puppetfile.forge_modules
         assert forge_module_vcsrepo in puppetfile.forge_modules
         assert git_module_custommod in puppetfile.git_modules
-
-
-class TestPuppetfileSetForgeurl:
-    @staticmethod
-    def test_it_set_forge_url():
-        github_repository = MagicMock()
-        content = github_repository.get_file_contents()
-        content.decoded_content.decode.return_value = ('')
-        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
-        assert puppetfile.forge_url is None
-        puppetfile.set_forge_url('https://url/to/forge')
-        assert puppetfile.forge_url == 'https://url/to/forge'
-        github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
-            "Puppetfile - Add forge URL",
-            "forge 'https://url/to/forge'",
-            "shasha")
-
-    @staticmethod
-    def test_it_update_puppetfile_git_sha():
-        github_repository = MagicMock()
-        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
-        github_repository.update_file()['content'].sha = 'newsha'
-        assert puppetfile.forge_url is None
-        puppetfile.set_forge_url('https://url/to/forge')
-        assert puppetfile.sha == 'newsha'
-
-    @staticmethod
-    def test_it_fails_to_write_puppetfile_on_github():
-        github_repository = MagicMock()
-        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
-        github_repository.update_file.side_effect = GithubException(500, 'Error')
-        with pytest.raises(PuppetfileUpdateException):
-            puppetfile.set_forge_url('https://url/to/forge')
-
-
-class TestPuppetfileRemoveForgeurl:
-    @staticmethod
-    def test_it_unset_forge_url():
-        github_repository = MagicMock()
-        content = github_repository.get_file_contents()
-        content.decoded_content.decode.return_value = ('')
-        puppetfile = Puppetfile(github_repository,
-                                'env',
-                                sha='shasha',
-                                forge_url='https://url/to/forge')
-        assert puppetfile.forge_url == 'https://url/to/forge'
-        assert puppetfile.sha == 'shasha'
-        puppetfile.remove_forge_url()
-        assert puppetfile.forge_url is None
-        github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
-            "Puppetfile - Remove forge URL",
-            "",
-            "shasha")
-
-    @staticmethod
-    def test_it_update_puppetfile_git_sha():
-        github_repository = MagicMock()
-        puppetfile = Puppetfile(github_repository,
-                                'env',
-                                sha='shasha',
-                                forge_url='https://url/to/forge')
-        github_repository.update_file()['content'].sha = 'newsha'
-        assert puppetfile.forge_url == 'https://url/to/forge'
-        assert puppetfile.sha == 'shasha'
-        puppetfile.remove_forge_url()
-        assert puppetfile.sha == 'newsha'
 
 
 class TestPuppetfileAddGitModule:

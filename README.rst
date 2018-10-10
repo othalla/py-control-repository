@@ -68,20 +68,6 @@ List Puppet modules in Puppetfile
 
    module_list = puppetfile.list_modules()
 
-Add a custom forge URL
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: python
-
-   puppetfile.set_forge_url('https://urlcustomforge.com/forge')
-
-Remove a custom forge URL
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: python
-
-   puppetfile.remove_forge_url()
-
 Add a forge module
 ~~~~~~~~~~~~~~~~~~
 

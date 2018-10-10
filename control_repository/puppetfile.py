@@ -25,8 +25,6 @@ class Puppetfile:
     :param forge_modules: A list of Puppet forge modules.
     :type git_modules: list of :class:`control_repository.modules.GitModule`
     :param git_modules: A list of Puppet git modules.
-    :type sha: string
-    :param sha: The url of the Puppet forge used to download modules.
     """
 
     def __init__(self,
@@ -34,8 +32,7 @@ class Puppetfile:
                  environment: str,
                  sha: Optional[str] = None,
                  forge_modules: Optional[List[ForgeModule]] = None,
-                 git_modules: Optional[List[GitModule]] = None,
-                 forge_url: Optional[str] = None) -> None:
+                 git_modules: Optional[List[GitModule]] = None) -> None:
         self._github_repository: Repository = github_repository
         self._environment = environment
         self._sha: Optional[str] = sha
@@ -43,7 +40,6 @@ class Puppetfile:
         self._forge_modules = [] if forge_modules is None else forge_modules
         self._git_modules: List[GitModule]
         self._git_modules = [] if git_modules is None else git_modules
-        self._forge_url: Optional[str] = forge_url
 
     @property
     def sha(self) -> Optional[str]:
@@ -66,13 +62,6 @@ class Puppetfile:
         """
         return self._git_modules
 
-    @property
-    def forge_url(self) -> Optional[str]:
-        """
-        :type: string
-        """
-        return self._forge_url
-
     def list_modules(self) -> Optional[List[str]]:
         """
         List all Puppet git and forge modules names present in the Puppetfile.
@@ -86,23 +75,6 @@ class Puppetfile:
         for git_module in self._git_modules:
             module_list.append(git_module.name)
         return module_list
-
-    def set_forge_url(self, url: str) -> None:
-        """
-        Add or update the Puppetfile URL used to download Puppet forge modules.
-
-        :type url: string
-        :param url: The url of the Puppet forge used in the Puppetfile.
-        """
-        self._forge_url = url
-        self._update_file_on_github('Add forge URL')
-
-    def remove_forge_url(self) -> None:
-        """
-        Remove the url used to download Puppet forge modules.
-        """
-        self._forge_url = None
-        self._update_file_on_github('Remove forge URL')
 
     def add_git_module(self,
                        name: str,
@@ -212,8 +184,6 @@ class Puppetfile:
 
     def __str__(self) -> str:
         content: str = ''
-        if self.forge_url:
-            content = f"forge '{self._forge_url}'"
         if self.forge_modules:
             for forge_module in self._forge_modules:
                 content += str(forge_module)
@@ -228,13 +198,10 @@ class Puppetfile:
                                environment: str) -> "Puppetfile":
         decoded_content, file_sha = cls._get_file_content_from_repository(
             github_repository, environment)
-        forge_url = None
         forge_modules = []
         git_modules = []
         splitted_content = decoded_content.replace('"', "'").split('\n')
         for index, line in enumerate(splitted_content):
-            if line.startswith('forge '):
-                forge_url = line.split('\'')[1]
             if line.startswith('mod '):
                 if not line.endswith(','):
                     forge_modules.append(ForgeModule.from_line(line))
@@ -249,8 +216,7 @@ class Puppetfile:
                    environment,
                    sha=file_sha,
                    forge_modules=forge_modules,
-                   git_modules=git_modules,
-                   forge_url=forge_url)
+                   git_modules=git_modules)
 
     @staticmethod
     def _get_file_content_from_repository(github_repository: Repository,
