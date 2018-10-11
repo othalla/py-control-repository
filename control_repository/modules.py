@@ -46,8 +46,8 @@ class ForgeModule(PuppetModule):
 
     def __str__(self) -> str:
         if self._version:
-            return f"mod '{self._name}', '{self._version}'"
-        return f"mod '{self._name}'"
+            return f"mod '{self._name}', '{self._version}'\n"
+        return f"mod '{self._name}'\n"
 
     def set_version(self, version: str) -> None:
         self._version = version
