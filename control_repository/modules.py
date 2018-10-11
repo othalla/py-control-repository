@@ -103,11 +103,11 @@ class GitModule(PuppetModule):
             return (
                 f"mod '{self._name}',\n"
                 f"  :git => '{self._url}',\n"
-                f"  :{self._reference_type} => '{self._reference}'"
+                f"  :{self._reference_type} => '{self._reference}'\n"
             )
         return (
             f"mod '{self._name}',\n"
-            f"  :git => '{self._url}'"
+            f"  :git => '{self._url}'\n"
         )
 
     @classmethod

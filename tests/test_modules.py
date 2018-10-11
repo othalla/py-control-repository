@@ -98,13 +98,13 @@ class TestGitModuleToString:
                                reference='test')
         assert str(git_module) == ("mod 'apache',\n"
                                    "  :git => 'https://url/to/git/apache',\n"
-                                   "  :branch => 'test'")
+                                   "  :branch => 'test'\n")
 
     @staticmethod
     def test_it_convert_a_git_module_without_reference_to_string():
         git_module = GitModule('apache', 'https://url/to/git/apache')
         assert str(git_module) == ("mod 'apache',\n"
-                                   "  :git => 'https://url/to/git/apache'")
+                                   "  :git => 'https://url/to/git/apache'\n")
 
 
 class TestGitModuleSetReference:
