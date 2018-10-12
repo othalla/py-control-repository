@@ -35,13 +35,6 @@ class PuppetfileNotFoundException(ControlRepositoryException):
     pass
 
 
-class PuppetfileUpdateException(ControlRepositoryException):
-    """
-    Puppetfile fails to write content to github
-    """
-    pass
-
-
 class ModuleParserException(ControlRepositoryException):
     """
     No valid module can be parsed

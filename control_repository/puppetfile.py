@@ -4,7 +4,6 @@ from github import GithubException
 from github.Repository import Repository
 
 from control_repository.exceptions import (PuppetfileNotFoundException,
-                                           PuppetfileUpdateException,
                                            ModuleAlreadyPresentException,
                                            ModuleNotFoundException)
 from control_repository.modules import ForgeModule, GitModule
@@ -172,14 +171,11 @@ class Puppetfile:
         raise ModuleNotFoundException
 
     def _update_file_on_github(self, source: str) -> None:
-        try:
-            update_result = self._github_repository.update_file(
-                "/Puppetfile",
-                f'Puppetfile - {source}',
-                str(self),
-                self._sha)
-        except GithubException:
-            raise PuppetfileUpdateException
+        update_result = self._github_repository.update_file(
+            "/Puppetfile",
+            f'Puppetfile - {source}',
+            str(self),
+            self._sha)
         self._sha = update_result['content'].sha
 
     def __str__(self) -> str:

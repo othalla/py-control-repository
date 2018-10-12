@@ -4,7 +4,6 @@ import pytest
 from github import GithubException
 
 from control_repository.exceptions import (PuppetfileNotFoundException,
-                                           PuppetfileUpdateException,
                                            ModuleAlreadyPresentException,
                                            ModuleNotFoundException)
 from control_repository.modules import ForgeModule, GitModule
