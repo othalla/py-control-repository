@@ -105,7 +105,7 @@ class TestPuppetfileAddGitModule:
             "Puppetfile - Add git module apache",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
-             "  :ref => 'ed19f'"),
+             "  :ref => 'ed19f'\n"),
             "shasha")
 
     @staticmethod
@@ -139,7 +139,7 @@ class TestPuppetfileAddForgeModule:
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
             "Puppetfile - Add forge module puppetlabs/apache",
-            "mod 'puppetlabs/apache', '0.1.10'",
+            "mod 'puppetlabs/apache', '0.1.10'\n",
             "shasha")
 
     @staticmethod
@@ -178,7 +178,7 @@ class TestPuppetfileUpdateGitModule:
             "Puppetfile - Update git module apache from ed19f to a76f6fb",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
-             "  :ref => 'a76f6fb'"),
+             "  :ref => 'a76f6fb'\n"),
             "shasha")
 
     @staticmethod
@@ -230,7 +230,7 @@ class TestPuppetfileUpdateForgeModule:
             "/Puppetfile",
             ("Puppetfile - Update forge module puppetlabs/apache "
              "from 0.1.1 to 0.1.2"),
-            "mod 'puppetlabs/apache', '0.1.2'",
+            "mod 'puppetlabs/apache', '0.1.2'\n",
             "shasha")
 
     @staticmethod
