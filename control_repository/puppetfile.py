@@ -194,25 +194,32 @@ class Puppetfile:
                                environment: str) -> "Puppetfile":
         decoded_content, file_sha = cls._get_file_content_from_repository(
             github_repository, environment)
-        forge_modules = []
-        git_modules = []
         splitted_content = decoded_content.replace('"', "'").split('\n')
-        for index, line in enumerate(splitted_content):
-            if line.startswith('mod '):
-                if not line.endswith(','):
-                    forge_modules.append(ForgeModule.from_line(line))
-                else:
-                    count = 1
-                    while splitted_content[index + count].endswith(','):
-                        count += 1
-                    module_lines = splitted_content[index:(index + count + 1)]
-                    git_module = GitModule.from_lines(module_lines)
-                    git_modules.append(git_module)
+        forge_modules, git_modules = cls._parse_puppet_modules(
+            splitted_content)
         return cls(github_repository,
                    environment,
                    sha=file_sha,
                    forge_modules=forge_modules,
                    git_modules=git_modules)
+
+    @staticmethod
+    def _parse_puppet_modules(lines: List[str]) -> Tuple[List[ForgeModule],
+                                                         List[GitModule]]:
+        forge_modules = []
+        git_modules = []
+        for index, line in enumerate(lines):
+            if line.startswith('mod '):
+                if not line.endswith(','):
+                    forge_modules.append(ForgeModule.from_line(line))
+                else:
+                    count = 1
+                    while lines[index + count].endswith(','):
+                        count += 1
+                    module_lines = lines[index:(index + count + 1)]
+                    git_module = GitModule.from_lines(module_lines)
+                    git_modules.append(git_module)
+        return forge_modules, git_modules
 
     @staticmethod
     def _get_file_content_from_repository(github_repository: Repository,
