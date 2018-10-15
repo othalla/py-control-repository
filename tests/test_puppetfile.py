@@ -1,3 +1,4 @@
+from copy import deepcopy
 from unittest.mock import MagicMock
 
 import pytest
@@ -8,6 +9,12 @@ from control_repository.exceptions import (PuppetfileNotFoundException,
                                            ModuleNotFoundException)
 from control_repository.modules import ForgeModule, GitModule
 from control_repository.puppetfile import Puppetfile
+
+
+GIT_MODULE_APACHE = GitModule('apache',
+                              'https://url/git/apache',
+                              'ref',
+                              'ed19f')
 
 
 class TestPuppetfileFromGitubRepository:
@@ -50,16 +57,12 @@ class TestPuppetfileFromGitubRepository:
         )
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
-        git_module_apache = GitModule('apache',
-                                      'https://url/git/apache',
-                                      'ref',
-                                      'ed19f')
         git_module_custommod = GitModule('custommod',
                                          'https://url/git/custommod')
         puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
         assert forge_module_apache in puppetfile.forge_modules
         assert forge_module_vcsrepo in puppetfile.forge_modules
-        assert git_module_apache in puppetfile.git_modules
+        assert GIT_MODULE_APACHE in puppetfile.git_modules
         assert git_module_custommod in puppetfile.git_modules
 
     @staticmethod
@@ -94,11 +97,7 @@ class TestPuppetfileAddGitModule:
                                   'https://url/git/apache',
                                   reference_type='ref',
                                   reference='ed19f')
-        git_module_apache = GitModule('apache',
-                                      'https://url/git/apache',
-                                      'ref',
-                                      'ed19f')
-        assert git_module_apache in puppetfile.git_modules
+        assert GIT_MODULE_APACHE in puppetfile.git_modules
         github_repository.update_file.assert_called_once_with(
             "/Puppetfile",
             "Puppetfile - Add git module apache",
@@ -112,14 +111,10 @@ class TestPuppetfileAddGitModule:
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        git_module_apache = GitModule('apache',
-                                      'https://url/git/apache',
-                                      'ref',
-                                      'ed19f')
         puppetfile = Puppetfile(github_repository,
                                 'env',
                                 sha='shasha',
-                                git_modules=[git_module_apache])
+                                git_modules=[GIT_MODULE_APACHE])
         with pytest.raises(ModuleAlreadyPresentException):
             puppetfile.add_git_module('apache', 'https://url/git/apache')
 
@@ -161,14 +156,10 @@ class TestPuppetfileUpdateGitModule:
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        git_module_apache = GitModule('apache',
-                                      'https://url/git/apache',
-                                      'ref',
-                                      'ed19f')
         puppetfile = Puppetfile(github_repository,
                                 'env',
                                 sha='shasha',
-                                git_modules=[git_module_apache])
+                                git_modules=[deepcopy(GIT_MODULE_APACHE)])
         assert puppetfile.git_modules[0].reference == 'ed19f'
         puppetfile.update_git_module('apache', 'a76f6fb')
         assert puppetfile.git_modules[0].reference == 'a76f6fb'
@@ -185,14 +176,10 @@ class TestPuppetfileUpdateGitModule:
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        git_module_apache = GitModule('apache',
-                                      'https://url/git/apache',
-                                      'ref',
-                                      'ed19f')
         puppetfile = Puppetfile(github_repository,
                                 'env',
                                 sha='shasha',
-                                git_modules=[git_module_apache])
+                                git_modules=[deepcopy(GIT_MODULE_APACHE)])
         assert puppetfile.git_modules[0].reference == 'ed19f'
         puppetfile.update_git_module('apache',
                                      'master',
