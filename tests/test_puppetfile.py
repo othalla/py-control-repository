@@ -150,6 +150,22 @@ class TestPuppetfileAddForgeModule:
             puppetfile.add_forge_module('puppetlabs/apache')
 
 
+class TestPuppetfileRemoveForgeModule:
+    @staticmethod
+    def test_it_remove_a_forge_module_from_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                forge_modules=[forge_module_apache])
+        assert forge_module_apache in puppetfile.forge_modules
+        puppetfile.remove_forge_module('puppetlabs/apache')
+        assert puppetfile.forge_modules == []
+
+
 class TestPuppetfileUpdateGitModule:
     @staticmethod
     def test_it_update_a_git_module_in_the_puppetfile():
