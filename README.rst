@@ -84,6 +84,13 @@ Update a forge module
 
    puppetfile.update_forge_module('puppetlabs/apache', '0.11.0')
 
+Remove a forge module
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   puppetfile.remove_forge_module('puppetlabs/apache')
+
 Add a git module
 ~~~~~~~~~~~~~~~~
 
