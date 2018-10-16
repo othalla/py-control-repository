@@ -165,6 +165,16 @@ class TestPuppetfileRemoveForgeModule:
         puppetfile.remove_forge_module('puppetlabs/apache')
         assert puppetfile.forge_modules == []
 
+    @staticmethod
+    def test_it_cannot_remove_a_forge_module_not_present_in_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        assert puppetfile.forge_modules == []
+        with pytest.raises(ModuleNotFoundException):
+            puppetfile.remove_forge_module('puppetlabs/apache')
+
 
 class TestPuppetfileUpdateGitModule:
     @staticmethod
