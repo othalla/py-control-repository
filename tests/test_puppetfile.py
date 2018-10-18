@@ -176,6 +176,22 @@ class TestPuppetfileRemoveForgeModule:
             puppetfile.remove_forge_module('puppetlabs/apache')
 
 
+class TestPuppetfileRemoveForgeModule:
+    @staticmethod
+    def test_it_remove_a_git_module_from_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository,
+                                'env',
+                                sha='shasha',
+                                git_modules=[GIT_MODULE_APACHE])
+        assert GIT_MODULE_APACHE in puppetfile.git_modules
+        puppetfile.remove_git_module('apache')
+        assert puppetfile.git_modules == []
+
+
+
 class TestPuppetfileUpdateGitModule:
     @staticmethod
     def test_it_update_a_git_module_in_the_puppetfile():

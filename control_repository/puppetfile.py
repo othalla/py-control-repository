@@ -125,6 +125,19 @@ class Puppetfile:
         self._forge_modules.append(module)
         self._update_file_on_github(f'Add forge module {name}')
 
+    def remove_git_module(self,
+                          name: str) -> None:
+        """
+        Remove a Puppet git module from the Puppetfile.
+
+        :type name: string
+        :param name: The name of the Puppet git module to remove from the
+                     Puppetfile.
+        """
+        for git_module in self._git_modules:
+            if git_module.name == name:
+                return self.git_modules.remove(git_module)
+
     def remove_forge_module(self,
                             name: str) -> None:
         """
