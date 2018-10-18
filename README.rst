@@ -130,3 +130,11 @@ For example you have a module deployed by its master branch and want to track it
 .. code-block:: python
 
    puppetfile.update_git_module('mymodule', '1.0.0', reference_type='tag')
+
+Remove a git module
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   puppetfile.remove_git_module('apache')
+
