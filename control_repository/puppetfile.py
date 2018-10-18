@@ -137,6 +137,7 @@ class Puppetfile:
         for git_module in self._git_modules:
             if git_module.name == name:
                 return self.git_modules.remove(git_module)
+        raise ModuleNotFoundException
 
     def remove_forge_module(self,
                             name: str) -> None:

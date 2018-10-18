@@ -190,6 +190,14 @@ class TestPuppetfileRemoveForgeModule:
         puppetfile.remove_git_module('apache')
         assert puppetfile.git_modules == []
 
+    @staticmethod
+    def test_it_cannot_remove_a_git_module_not_present_in_the_puppetfile():
+        github_repository = MagicMock()
+        content = github_repository.get_file_contents()
+        content.decoded_content.decode.return_value = ('')
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
+        with pytest.raises(ModuleNotFoundException):
+            puppetfile.remove_git_module('apache')
 
 
 class TestPuppetfileUpdateGitModule:
