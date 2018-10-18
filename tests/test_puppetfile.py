@@ -176,7 +176,7 @@ class TestPuppetfileRemoveForgeModule:
             puppetfile.remove_forge_module('puppetlabs/apache')
 
 
-class TestPuppetfileRemoveForgeModule:
+class TestPuppetfileRemoveGitModule:
     @staticmethod
     def test_it_remove_a_git_module_from_the_puppetfile():
         github_repository = MagicMock()
