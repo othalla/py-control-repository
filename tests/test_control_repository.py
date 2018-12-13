@@ -88,3 +88,22 @@ class TestControlRepositoryGetEnvironments:
         assert puppet_environments[0].name == 'dev'
         assert isinstance(puppet_environments[1], Environment)
         assert puppet_environments[1].name == 'prd'
+
+
+class TestControlRepositoryCreateEnvironments:
+    @staticmethod
+    @patch('control_repository.control_repository.Github')
+    def test_it_returns_the_new_environment(github):
+        control_repository = ControlRepository('test_organization',
+                                               'test_repository',
+                                               'some-token')
+        repository = github().get_organization().get_repo()
+        source_branch = MagicMock()
+        source_branch.configure_mock(name='source_branch')
+        created_branch = MagicMock()
+        created_branch.configure_mock(name='newenv')
+        repository.get_branch.side_effect = [source_branch, created_branch]
+        puppet_environment = control_repository.create_environment(
+            'source_environment', 'newenv')
+        assert isinstance(puppet_environment, Environment)
+        assert puppet_environment.name == 'newenv'
