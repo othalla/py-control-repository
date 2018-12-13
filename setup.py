@@ -1,6 +1,6 @@
 import setuptools
 
-version = "0.9.0"
+version = "1.0.0"
 
 
 setuptools.setup(
