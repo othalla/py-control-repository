@@ -75,6 +75,19 @@ class ControlRepository:
     def create_environment(self,
                            source_environment: str,
                            new_environment: str) -> Environment:
+        """
+        Create a new Puppet environment based on an existing one, given
+        in parameters.
+
+        :type source_environment: string
+        :param source_environment: The name of the Puppet source environment
+                                   to clone.
+        :type new_environment: string
+        :param new_environment: The name of the new Puppet environment
+                                to create.
+        :rtype: :class:`control_repository.environment.Environment`
+        :return: Puppet Environment object
+        """
         source_branch = self._github_repository.get_branch(source_environment)
         self._github_repository.create_git_ref(
             ref=f'refs/heads/{new_environment}', sha=source_branch.commit.sha)
