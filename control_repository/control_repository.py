@@ -91,10 +91,7 @@ class ControlRepository:
         source_branch = self._github_repository.get_branch(source_environment)
         self._github_repository.create_git_ref(
             ref=f'refs/heads/{new_environment}', sha=source_branch.commit.sha)
-        created_environment = self._github_repository.get_branch(
-            new_environment)
-        return Environment(created_environment.name,
-                           self._github_repository)
+        return self.get_environment(new_environment)
 
     def _get_github_repository(self) -> Repository:
         try:
