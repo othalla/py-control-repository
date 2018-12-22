@@ -36,9 +36,9 @@ class Puppetfile:
         self._environment = environment
         self._sha: Optional[str] = sha
         self._forge_modules: List[ForgeModule]
-        self._forge_modules = [] if forge_modules is None else forge_modules
+        self._forge_modules = forge_modules or []
         self._git_modules: List[GitModule]
-        self._git_modules = [] if git_modules is None else git_modules
+        self._git_modules = git_modules or []
 
     @property
     def sha(self) -> Optional[str]:
