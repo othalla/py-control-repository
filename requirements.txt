@@ -1,2 +1,2 @@
-PyGitHub
+PyGithub==1.43.4
 pytest
