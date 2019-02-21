@@ -200,7 +200,7 @@ class Puppetfile:
 
     def _update_file_on_github(self, source: str) -> None:
         update_result = self._github_repository.update_file(
-            "/Puppetfile",
+            '/Puppetfile',
             f'Puppetfile - {source}',
             str(self),
             self._sha)
@@ -219,7 +219,7 @@ class Puppetfile:
     @classmethod
     def from_github_repository(cls,
                                github_repository: Repository,
-                               environment: str) -> "Puppetfile":
+                               environment: str) -> 'Puppetfile':
         decoded_content, file_sha = cls._get_file_content_from_repository(
             github_repository, environment)
         splitted_content = decoded_content.replace('"', "'").split('\n')

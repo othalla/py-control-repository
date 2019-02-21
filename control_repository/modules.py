@@ -53,7 +53,7 @@ class ForgeModule(PuppetModule):
         self._version = version
 
     @classmethod
-    def from_line(cls, line: str) -> "ForgeModule":
+    def from_line(cls, line: str) -> 'ForgeModule':
         fragments = line.split("'")
         if len(fragments) == 3:
             if line.endswith(', :latest'):
@@ -111,7 +111,7 @@ class GitModule(PuppetModule):
         )
 
     @classmethod
-    def from_lines(cls, lines: List[str]) -> "GitModule":
+    def from_lines(cls, lines: List[str]) -> 'GitModule':
         reference: Optional[str] = None
         reference_type: Optional[str] = None
         url: str = ''
