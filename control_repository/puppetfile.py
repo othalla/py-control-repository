@@ -3,9 +3,9 @@ from typing import List, Optional, Tuple
 from github import GithubException
 from github.Repository import Repository
 
-from control_repository.exceptions import (PuppetfileNotFoundException,
-                                           ModuleAlreadyPresentException,
-                                           ModuleNotFoundException)
+from control_repository.exceptions import (ModuleAlreadyPresentException,
+                                           ModuleNotFoundException,
+                                           PuppetfileNotFoundException)
 from control_repository.modules import ForgeModule, GitModule
 
 

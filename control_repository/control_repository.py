@@ -1,11 +1,11 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from github import Github, GithubException
 from github.Repository import Repository
 
+from control_repository.environment import Environment
 from control_repository.exceptions import (ControlRepositoryException,
                                            EnvironmentNotFoundException)
-from control_repository.environment import Environment
 
 
 class ControlRepository:
