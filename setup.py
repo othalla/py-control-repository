@@ -26,6 +26,10 @@ setuptools.setup(
     ],
     install_requires=[
         "PyGithub>=1.43",
+        "cliff==2.14.1",
     ],
-    extras_require={}
+    extras_require={},
+    entry_points={
+        'console_scripts': ['control_repository=control_repository.bin.__init__:main']
+    }
 )
