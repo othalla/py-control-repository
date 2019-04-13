@@ -29,14 +29,9 @@ class EnvironmentList(Lister):
 
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
-        parser.add_argument('name',
-                            nargs='?',
-                            help='name of the environment')
         return parser
 
     def take_action(self, parsed_args):
-        if parsed_args.name:
-            print('environment given')
         return (('Name',), ((env,) for env in ENVS))
 
 
