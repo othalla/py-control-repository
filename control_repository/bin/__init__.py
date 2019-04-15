@@ -1,4 +1,5 @@
 import sys
+from os import environ
 
 from cliff.app import App
 from cliff.commandmanager import CommandManager
@@ -35,6 +36,11 @@ class EnvironmentList(Lister):
         return parser
 
     def take_action(self, parsed_args):
+        token = environ.get('ACCESS_TOKEN')
+        if not token:
+            exit('No github access token provided. '
+                 'You can set it with ACCESS_TOKEN environment var.')
+        print(token)
         print(parsed_args.url)
         return (('Name',), ((env,) for env in ENVS))
 
