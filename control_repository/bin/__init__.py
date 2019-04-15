@@ -29,9 +29,13 @@ class EnvironmentList(Lister):
 
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
         return parser
 
     def take_action(self, parsed_args):
+        print(parsed_args.url)
         return (('Name',), ((env,) for env in ENVS))
 
 
