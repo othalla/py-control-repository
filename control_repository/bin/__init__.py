@@ -7,8 +7,6 @@ from cliff.lister import Lister
 
 from control_repository.control_repository import ControlRepository
 
-ENVS = ['dev', 'production']
-
 
 class MyApp(App):
     def __init__(self):
