@@ -5,6 +5,8 @@ from cliff.app import App
 from cliff.commandmanager import CommandManager
 from cliff.lister import Lister
 
+from control_repository.control_repository import ControlRepository
+
 ENVS = ['dev', 'production']
 
 
@@ -36,13 +38,24 @@ class EnvironmentList(Lister):
         return parser
 
     def take_action(self, parsed_args):
-        token = environ.get('ACCESS_TOKEN')
+        organisation = environ.get('GITHUB_ORGANISATION')
+        if not organisation:
+            exit('No github organisation provided. '
+                 'You can set it with GITHUB_ORGANISATION environment var.')
+        repository = environ.get('GITHUB_REPOSITORY')
+        if not repository:
+            exit('No github repository provided. '
+                 'You can set it with GITHUB_REPOSITORY environment var.')
+        token = environ.get('GITHUB_ACCESS_TOKEN')
         if not token:
             exit('No github access token provided. '
-                 'You can set it with ACCESS_TOKEN environment var.')
-        print(token)
-        print(parsed_args.url)
-        return (('Name',), ((env,) for env in ENVS))
+                 'You can set it with GITHUB_ACCESS_TOKEN environment var.')
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        environment_list = control_repository.get_environment_names()
+        return (('Name',), ((env,) for env in environment_list))
 
 
 def main():
