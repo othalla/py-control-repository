@@ -36,18 +36,7 @@ class EnvironmentList(Lister):
         return parser
 
     def take_action(self, parsed_args):
-        organisation = environ.get('GITHUB_ORGANISATION')
-        if not organisation:
-            exit('No github organisation provided. '
-                 'You can set it with GITHUB_ORGANISATION environment var.')
-        repository = environ.get('GITHUB_REPOSITORY')
-        if not repository:
-            exit('No github repository provided. '
-                 'You can set it with GITHUB_REPOSITORY environment var.')
-        token = environ.get('GITHUB_ACCESS_TOKEN')
-        if not token:
-            exit('No github access token provided. '
-                 'You can set it with GITHUB_ACCESS_TOKEN environment var.')
+        organisation, repository, token = get_config_from_environment()
         control_repository = ControlRepository(organisation,
                                                repository,
                                                token,
@@ -72,18 +61,7 @@ class EnvironmentModuleList(Lister):
         return parser
 
     def take_action(self, parsed_args):
-        organisation = environ.get('GITHUB_ORGANISATION')
-        if not organisation:
-            exit('No github organisation provided. '
-                 'You can set it with GITHUB_ORGANISATION environment var.')
-        repository = environ.get('GITHUB_REPOSITORY')
-        if not repository:
-            exit('No github repository provided. '
-                 'You can set it with GITHUB_REPOSITORY environment var.')
-        token = environ.get('GITHUB_ACCESS_TOKEN')
-        if not token:
-            exit('No github access token provided. '
-                 'You can set it with GITHUB_ACCESS_TOKEN environment var.')
+        organisation, repository, token = get_config_from_environment()
         control_repository = ControlRepository(organisation,
                                                repository,
                                                token,
@@ -93,6 +71,22 @@ class EnvironmentModuleList(Lister):
         puppetfile = puppet_environment.get_puppetfile()
         module_list = puppetfile.list_modules()
         return (('Name',), ((module,) for module in module_list))
+
+
+def get_config_from_environment():
+    organisation = environ.get('GITHUB_ORGANISATION')
+    if not organisation:
+        exit('No github organisation provided. '
+             'You can set it with GITHUB_ORGANISATION environment var.')
+    repository = environ.get('GITHUB_REPOSITORY')
+    if not repository:
+        exit('No github repository provided. '
+             'You can set it with GITHUB_REPOSITORY environment var.')
+    token = environ.get('GITHUB_ACCESS_TOKEN')
+    if not token:
+        exit('No github access token provided. '
+             'You can set it with GITHUB_ACCESS_TOKEN environment var.')
+    return organisation, repository, token
 
 
 def main():
