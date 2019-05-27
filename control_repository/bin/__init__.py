@@ -18,7 +18,9 @@ class MyApp(App):
         )
 
     def initialize_app(self, argv):
-        commands = [EnvironmentList, EnvironmentModuleList]
+        commands = [EnvironmentList,
+                    EnvironmentModuleList,
+                    EnvironmentModuleForgeList]
         for command in commands:
             self.command_manager.add_command(command.name, command)
 
@@ -43,6 +45,35 @@ class EnvironmentList(Lister):
                                                parsed_args.url)
         environment_list = control_repository.get_environment_names()
         return (('Name',), ((env,) for env in environment_list))
+
+
+class EnvironmentModuleForgeList(Lister):
+    """List all forge module for a specific environment"""
+
+    name = 'environment module forge list'
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+        parser.add_argument('name',
+                            help='Name of the environment',
+                            nargs=1)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
+        return parser
+
+    def take_action(self, parsed_args):
+        organisation, repository, token = get_config_from_environment()
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        puppet_environment = control_repository.get_environment(
+            parsed_args.name[0])
+        puppetfile = puppet_environment.get_puppetfile()
+        forge_modules = puppetfile.forge_modules
+        return (('Name', 'version'),
+                ((module.name, module.version) for module in forge_modules))
 
 
 class EnvironmentModuleList(Lister):
