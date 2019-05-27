@@ -111,7 +111,7 @@ class EnvironmentModuleGitList(Lister):
 
 
 class EnvironmentModuleList(Lister):
-    """List all Puppet environments"""
+    """List all modules for a specific environment"""
 
     name = 'environment module list'
 
