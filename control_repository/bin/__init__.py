@@ -18,7 +18,7 @@ class MyApp(App):
         )
 
     def initialize_app(self, argv):
-        commands = [EnvironmentList, ]
+        commands = [EnvironmentList, EnvironmentModuleList]
         for command in commands:
             self.command_manager.add_command(command.name, command)
 
@@ -54,6 +54,45 @@ class EnvironmentList(Lister):
                                                parsed_args.url)
         environment_list = control_repository.get_environment_names()
         return (('Name',), ((env,) for env in environment_list))
+
+
+class EnvironmentModuleList(Lister):
+    """List all Puppet environments"""
+
+    name = 'environment module list'
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+        parser.add_argument('name',
+                            help='Name of the environment',
+                            nargs=1)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
+        return parser
+
+    def take_action(self, parsed_args):
+        organisation = environ.get('GITHUB_ORGANISATION')
+        if not organisation:
+            exit('No github organisation provided. '
+                 'You can set it with GITHUB_ORGANISATION environment var.')
+        repository = environ.get('GITHUB_REPOSITORY')
+        if not repository:
+            exit('No github repository provided. '
+                 'You can set it with GITHUB_REPOSITORY environment var.')
+        token = environ.get('GITHUB_ACCESS_TOKEN')
+        if not token:
+            exit('No github access token provided. '
+                 'You can set it with GITHUB_ACCESS_TOKEN environment var.')
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        puppet_environment = control_repository.get_environment(
+            parsed_args.name[0])
+        puppetfile = puppet_environment.get_puppetfile()
+        module_list = puppetfile.list_modules()
+        return (('Name',), ((module,) for module in module_list))
 
 
 def main():
