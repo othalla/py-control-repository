@@ -20,7 +20,8 @@ class MyApp(App):
     def initialize_app(self, argv):
         commands = [EnvironmentList,
                     EnvironmentModuleList,
-                    EnvironmentModuleForgeList]
+                    EnvironmentModuleForgeList,
+                    EnvironmentModuleGitList]
         for command in commands:
             self.command_manager.add_command(command.name, command)
 
@@ -74,6 +75,39 @@ class EnvironmentModuleForgeList(Lister):
         forge_modules = puppetfile.forge_modules
         return (('Name', 'version'),
                 ((module.name, module.version) for module in forge_modules))
+
+
+class EnvironmentModuleGitList(Lister):
+    """List all git module for a specific environment"""
+
+    name = 'environment module git list'
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+        parser.add_argument('name',
+                            help='Name of the environment',
+                            nargs=1)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
+        return parser
+
+    def take_action(self, parsed_args):
+        organisation, repository, token = get_config_from_environment()
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        puppet_environment = control_repository.get_environment(
+            parsed_args.name[0])
+        puppetfile = puppet_environment.get_puppetfile()
+        git_modules = puppetfile.git_modules
+        return (('Name', 'url', 'reference_type', 'referece'),
+                ((module.name,
+                  module.git_url,
+                  module.reference_type if module.reference_type else '',
+                  module.reference if module.reference else '')
+                 for module in git_modules))
 
 
 class EnvironmentModuleList(Lister):
