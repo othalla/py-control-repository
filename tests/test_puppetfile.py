@@ -99,7 +99,7 @@ class TestPuppetfileAddGitModule:
                                   reference='ed19f')
         assert GIT_MODULE_APACHE in puppetfile.git_modules
         github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
+            "Puppetfile",
             "Puppetfile - Add git module apache",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
@@ -131,7 +131,7 @@ class TestPuppetfileAddForgeModule:
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         assert forge_module_apache in puppetfile.forge_modules
         github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
+            "Puppetfile",
             "Puppetfile - Add forge module puppetlabs/apache",
             "mod 'puppetlabs/apache', '0.1.10'\n",
             "shasha")
@@ -214,7 +214,7 @@ class TestPuppetfileUpdateGitModule:
         puppetfile.update_git_module('apache', 'a76f6fb')
         assert puppetfile.git_modules[0].reference == 'a76f6fb'
         github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
+            "Puppetfile",
             "Puppetfile - Update git module apache from ed19f to a76f6fb",
             ("mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
@@ -263,7 +263,7 @@ class TestPuppetfileUpdateForgeModule:
         puppetfile.update_forge_module('puppetlabs/apache', version='0.1.2')
         assert puppetfile.forge_modules[0].version == '0.1.2'
         github_repository.update_file.assert_called_once_with(
-            "/Puppetfile",
+            "Puppetfile",
             ("Puppetfile - Update forge module puppetlabs/apache "
              "from 0.1.1 to 0.1.2"),
             "mod 'puppetlabs/apache', '0.1.2'\n",

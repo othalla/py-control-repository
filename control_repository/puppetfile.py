@@ -200,7 +200,7 @@ class Puppetfile:
 
     def _update_file_on_github(self, source: str) -> None:
         update_result = self._github_repository.update_file(
-            '/Puppetfile',
+            'Puppetfile',
             f'Puppetfile - {source}',
             str(self),
             self._sha)
