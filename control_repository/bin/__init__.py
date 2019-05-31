@@ -2,9 +2,9 @@ import sys
 from os import environ
 
 from cliff.app import App
+from cliff.command import Command
 from cliff.commandmanager import CommandManager
 from cliff.lister import Lister
-from cliff.command import Command
 
 from control_repository.control_repository import ControlRepository
 
