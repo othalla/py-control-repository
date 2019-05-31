@@ -119,8 +119,8 @@ class Puppetfile:
                         Puppetfile.
         """
         module = ForgeModule(name, version=version)
-        for module in self._forge_modules:
-            if name == module.name:
+        for forge_module in self._forge_modules:
+            if name == forge_module.name:
                 raise ModuleAlreadyPresentException
         self._forge_modules.append(module)
         self._update_file_on_github(f'Add forge module {name}')

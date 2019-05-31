@@ -15,6 +15,7 @@ GIT_MODULE_APACHE = GitModule('apache',
                               'https://url/git/apache',
                               'ref',
                               'ed19f')
+FORGE_MODULE_NGINX = ForgeModule('puppet-nginx', '0.16.0')
 
 
 class TestPuppetfileFromGitubRepository:
@@ -125,15 +126,16 @@ class TestPuppetfileAddForgeModule:
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
-        assert puppetfile.forge_modules == []
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha',
+                                forge_modules=[FORGE_MODULE_NGINX])
+        assert puppetfile.forge_modules == [FORGE_MODULE_NGINX]
         puppetfile.add_forge_module('puppetlabs/apache', '0.1.10')
         forge_module_apache = ForgeModule('puppetlabs/apache', '0.1.10')
         assert forge_module_apache in puppetfile.forge_modules
         github_repository.update_file.assert_called_once_with(
             "Puppetfile",
             "Puppetfile - Add forge module puppetlabs/apache",
-            "mod 'puppetlabs/apache', '0.1.10'\n",
+             f"{str(FORGE_MODULE_NGINX)}mod 'puppetlabs/apache', '0.1.10'\n",
             "shasha")
 
     @staticmethod
