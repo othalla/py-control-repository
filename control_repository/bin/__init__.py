@@ -76,7 +76,9 @@ class EnvironmentModuleForgeList(Lister):
         puppetfile = puppet_environment.get_puppetfile()
         forge_modules = puppetfile.forge_modules
         return (('Name', 'version'),
-                ((module.name, module.version) for module in forge_modules))
+                ((module.name,
+                  module.version if module.version else '')
+                 for module in forge_modules))
 
 
 class EnvironmentModuleGitList(Lister):
@@ -125,7 +127,7 @@ class EnvironmentModuleForgeAdd(Command):
         parser.add_argument('module',
                             help='Name of the module',
                             nargs=1)
-        parser.add_argument('--version',
+        parser.add_argument('--module_version',
                             help='version of the forge module',
                             default=None)
         parser.add_argument('--url',
@@ -141,10 +143,10 @@ class EnvironmentModuleForgeAdd(Command):
                                                parsed_args.url)
         puppet_environment = control_repository.get_environment(
             parsed_args.environment[0])
+        print(parsed_args.module_version)
         puppetfile = puppet_environment.get_puppetfile()
-        print('here')
-        puppetfile.add_forge_module(parsed_args.module, parsed_args.version)
-        print('here')
+        puppetfile.add_forge_module(parsed_args.module[0],
+                                    parsed_args.module_version)
 
 
 class EnvironmentModuleList(Lister):
