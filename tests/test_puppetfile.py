@@ -166,6 +166,11 @@ class TestPuppetfileRemoveForgeModule:
         assert forge_module_apache in puppetfile.forge_modules
         puppetfile.remove_forge_module('puppetlabs/apache')
         assert puppetfile.forge_modules == []
+        github_repository.update_file.assert_called_once_with(
+            "Puppetfile",
+            "Puppetfile - Remove forge module puppetlabs/apache",
+            "",
+            "shasha")
 
     @staticmethod
     def test_it_cannot_remove_a_forge_module_not_present_in_the_puppetfile():
