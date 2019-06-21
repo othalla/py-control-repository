@@ -144,7 +144,6 @@ class EnvironmentModuleForgeAdd(Command):
                                                parsed_args.url)
         puppet_environment = control_repository.get_environment(
             parsed_args.environment[0])
-        print(parsed_args.module_version)
         puppetfile = puppet_environment.get_puppetfile()
         puppetfile.add_forge_module(parsed_args.module[0],
                                     parsed_args.module_version)
