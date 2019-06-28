@@ -26,7 +26,7 @@ setuptools.setup(
     ],
     install_requires=[
         "PyGithub>=1.43",
-        "cliff==2.14.1",
+        "cliff==2.15.0",
     ],
     extras_require={},
     entry_points={

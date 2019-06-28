@@ -1,2 +1,2 @@
 PyGithub==1.43.4
-cliff==2.14.1
+cliff==2.15.0
