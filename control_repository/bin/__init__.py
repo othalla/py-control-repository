@@ -25,7 +25,8 @@ class MyApp(App):
                     EnvironmentModuleForgeAdd,
                     EnvironmentModuleForgeRemove,
                     EnvironmentModuleForgeUpdate,
-                    EnvironmentModuleGitList]
+                    EnvironmentModuleGitList,
+                    EnvironmentModuleGitAdd]
         for command in commands:
             self.command_manager.add_command(command.name, command)
 
@@ -148,6 +149,40 @@ class EnvironmentModuleForgeAdd(Command):
         puppetfile = puppet_environment.get_puppetfile()
         puppetfile.add_forge_module(parsed_args.module[0],
                                     parsed_args.module_version)
+
+
+class EnvironmentModuleGitAdd(Command):
+    """Add a git module to a specific environment"""
+
+    name = 'environment module git add'
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+        parser.add_argument('environment',
+                            help='Name of the environment',
+                            nargs=1)
+        parser.add_argument('module',
+                            help='Name of the module',
+                            nargs=1)
+        parser.add_argument('url',
+                            help='GitHub URL of the git module to add',
+                            nargs=1)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
+        return parser
+
+    def take_action(self, parsed_args):
+        organisation, repository, token = get_config_from_environment()
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        puppet_environment = control_repository.get_environment(
+            parsed_args.environment[0])
+        puppetfile = puppet_environment.get_puppetfile()
+        puppetfile.add_git_module(parsed_args.module[0],
+                                  parsed_args.url[0])
 
 
 class EnvironmentModuleForgeUpdate(Command):
