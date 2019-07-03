@@ -15,6 +15,8 @@ GIT_MODULE_APACHE = GitModule('apache',
                               'https://url/git/apache',
                               'ref',
                               'ed19f')
+GIT_MODULE_NGINX = GitModule('nginx',
+                              'https://url/git/nginx')
 FORGE_MODULE_NGINX = ForgeModule('puppet-nginx', '0.16.0')
 
 
@@ -92,8 +94,9 @@ class TestPuppetfileAddGitModule:
         github_repository = MagicMock()
         content = github_repository.get_file_contents()
         content.decoded_content.decode.return_value = ('')
-        puppetfile = Puppetfile(github_repository, 'env', sha='shasha')
-        assert puppetfile.git_modules == []
+        puppetfile = Puppetfile(github_repository, 'env', sha='shasha',
+                                git_modules=[GIT_MODULE_NGINX])
+        assert puppetfile.git_modules == [GIT_MODULE_NGINX]
         puppetfile.add_git_module('apache',
                                   'https://url/git/apache',
                                   reference_type='ref',
@@ -102,7 +105,8 @@ class TestPuppetfileAddGitModule:
         github_repository.update_file.assert_called_once_with(
             "Puppetfile",
             "Puppetfile - Add git module apache",
-            ("mod 'apache',\n"
+            (f'{str(GIT_MODULE_NGINX)}'
+             "mod 'apache',\n"
              "  :git => 'https://url/git/apache',\n"
              "  :ref => 'ed19f'\n"),
             "shasha")

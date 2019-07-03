@@ -99,8 +99,8 @@ class Puppetfile:
         """
         module = GitModule(name, url, reference_type=reference_type,
                            reference=reference)
-        for module in self._git_modules:
-            if name == module.name:
+        for git_module in self._git_modules:
+            if name == git_module.name:
                 raise ModuleAlreadyPresentException
         self._git_modules.append(module)
         self._update_file_on_github(f'Add git module {name}')
