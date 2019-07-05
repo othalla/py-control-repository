@@ -26,7 +26,8 @@ class MyApp(App):
                     EnvironmentModuleForgeRemove,
                     EnvironmentModuleForgeUpdate,
                     EnvironmentModuleGitList,
-                    EnvironmentModuleGitAdd]
+                    EnvironmentModuleGitAdd,
+                    EnvironmentModuleGitRemove]
         for command in commands:
             self.command_manager.add_command(command.name, command)
 
@@ -259,6 +260,38 @@ class EnvironmentModuleForgeRemove(Command):
             parsed_args.environment[0])
         puppetfile = puppet_environment.get_puppetfile()
         puppetfile.remove_forge_module(parsed_args.module[0])
+
+
+class EnvironmentModuleGitRemove(Command):
+    """Remove a git module from a specific environment"""
+
+    name = 'environment module git remove'
+
+    def get_parser(self, prog_name):
+        parser = super().get_parser(prog_name)
+        parser.add_argument('environment',
+                            help='Name of the environment',
+                            nargs=1)
+        parser.add_argument('module',
+                            help='Name of the module',
+                            nargs=1)
+        parser.add_argument('--url',
+                            default=None,
+                            help='github url of the control repository')
+        return parser
+
+    def take_action(self, parsed_args):
+        organisation, repository, token = get_config_from_environment()
+        control_repository = ControlRepository(organisation,
+                                               repository,
+                                               token,
+                                               parsed_args.url)
+        puppet_environment = control_repository.get_environment(
+            parsed_args.environment[0])
+        puppetfile = puppet_environment.get_puppetfile()
+        print('qdsqdd')
+        print(parsed_args.module)
+        puppetfile.remove_git_module(parsed_args.module[0])
 
 
 class EnvironmentModuleList(Lister):
