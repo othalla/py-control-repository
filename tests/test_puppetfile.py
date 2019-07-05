@@ -200,6 +200,11 @@ class TestPuppetfileRemoveGitModule:
         assert GIT_MODULE_APACHE in puppetfile.git_modules
         puppetfile.remove_git_module('apache')
         assert puppetfile.git_modules == []
+        github_repository.update_file.assert_called_once_with(
+            "Puppetfile",
+            "Puppetfile - Remove git module apache",
+            "",
+            "shasha")
 
     @staticmethod
     def test_it_cannot_remove_a_git_module_not_present_in_the_puppetfile():
