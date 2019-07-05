@@ -167,12 +167,22 @@ class EnvironmentModuleGitAdd(Command):
         parser.add_argument('url',
                             help='GitHub URL of the git module to add',
                             nargs=1)
+        parser.add_argument('--reference_type',
+                            default=None,
+                            help=('Git reference type to check out: '
+                                  'Tag, commit or branch.'))
+        parser.add_argument('--reference',
+                            default=None,
+                            help='Git reference to check out.')
         parser.add_argument('--url',
                             default=None,
                             help='github url of the control repository')
         return parser
 
     def take_action(self, parsed_args):
+        if not parsed_args.reference or not parsed_args.reference_type:
+            exit('You must provide either a git reference type and a'
+                 'git reference.')
         organisation, repository, token = get_config_from_environment()
         control_repository = ControlRepository(organisation,
                                                repository,
@@ -182,7 +192,9 @@ class EnvironmentModuleGitAdd(Command):
             parsed_args.environment[0])
         puppetfile = puppet_environment.get_puppetfile()
         puppetfile.add_git_module(parsed_args.module[0],
-                                  parsed_args.url[0])
+                                  parsed_args.url[0],
+                                  reference_type=parsed_args.reference_type,
+                                  reference=parsed_args.reference)
 
 
 class EnvironmentModuleForgeUpdate(Command):
