@@ -181,9 +181,10 @@ class EnvironmentModuleGitAdd(Command):
         return parser
 
     def take_action(self, parsed_args):
-        if not parsed_args.reference or not parsed_args.reference_type:
-            exit('You must provide either a git reference type and a'
-                 'git reference.')
+        if parsed_args.reference or parsed_args.reference_type:
+            if not parsed_args.reference or not parsed_args.reference_type:
+                exit('You must provide either a git reference type and a'
+                     'git reference.')
         organisation, repository, token = get_config_from_environment()
         control_repository = ControlRepository(organisation,
                                                repository,
@@ -289,8 +290,6 @@ class EnvironmentModuleGitRemove(Command):
         puppet_environment = control_repository.get_environment(
             parsed_args.environment[0])
         puppetfile = puppet_environment.get_puppetfile()
-        print('qdsqdd')
-        print(parsed_args.module)
         puppetfile.remove_git_module(parsed_args.module[0])
 
 
