@@ -30,6 +30,6 @@ setuptools.setup(
     ],
     extras_require={},
     entry_points={
-        'console_scripts': ['control_repository=control_repository.bin.__init__:main']
+        'console_scripts': ['control_repository=control_repository.bin.cli:main']
     }
 )
