@@ -19,7 +19,8 @@ class TestControlRepository:
         github.assert_called_once()
         github.assert_called_once_with('some-token')
         github().get_organization.assert_called_once_with('organization')
-        github().get_organization().get_repo.assert_called_once_with('repository')
+        github().get_organization().get_repo.assert_called_once_with(
+            'repository')
 
     @staticmethod
     @patch('control_repository.control_repository.Github')
@@ -48,7 +49,8 @@ class TestControlRepositoryGetEnvironment:
                                                'test_repository',
                                                'some-token')
         repository = github().get_organization().get_repo()
-        repository.get_branch.side_effect = GithubException('badstatus', 'missing')
+        repository.get_branch.side_effect = GithubException('badstatus',
+                                                            'missing')
         with pytest.raises(EnvironmentNotFoundException):
             control_repository.get_environment('environment')
 
