@@ -16,7 +16,7 @@ GIT_MODULE_APACHE = GitModule('apache',
                               'ref',
                               'ed19f')
 GIT_MODULE_NGINX = GitModule('nginx',
-                              'https://url/git/nginx')
+                             'https://url/git/nginx')
 FORGE_MODULE_NGINX = ForgeModule('puppet-nginx', '0.16.0')
 
 
@@ -42,7 +42,8 @@ class TestPuppetfileFromGitubRepository:
     def test_it_set_file_sha():
         github_repository = MagicMock()
         github_repository.get_file_contents().sha = 'shasha'
-        puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
+        puppetfile = Puppetfile.from_github_repository(github_repository,
+                                                       'env')
         assert puppetfile.sha == 'shasha'
 
     @staticmethod
@@ -62,7 +63,8 @@ class TestPuppetfileFromGitubRepository:
         forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
         git_module_custommod = GitModule('custommod',
                                          'https://url/git/custommod')
-        puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
+        puppetfile = Puppetfile.from_github_repository(github_repository,
+                                                       'env')
         assert forge_module_apache in puppetfile.forge_modules
         assert forge_module_vcsrepo in puppetfile.forge_modules
         assert GIT_MODULE_APACHE in puppetfile.git_modules
@@ -82,7 +84,8 @@ class TestPuppetfileFromGitubRepository:
         forge_module_vcsrepo = ForgeModule('puppetlabs/vcsrepo', '0.2.10')
         git_module_custommod = GitModule('custommod',
                                          'https://url/git/custommod')
-        puppetfile = Puppetfile.from_github_repository(github_repository, 'env')
+        puppetfile = Puppetfile.from_github_repository(github_repository,
+                                                       'env')
         assert forge_module_apache in puppetfile.forge_modules
         assert forge_module_vcsrepo in puppetfile.forge_modules
         assert git_module_custommod in puppetfile.git_modules
@@ -139,7 +142,7 @@ class TestPuppetfileAddForgeModule:
         github_repository.update_file.assert_called_once_with(
             "Puppetfile",
             "Puppetfile - Add forge module puppetlabs/apache",
-             f"{str(FORGE_MODULE_NGINX)}mod 'puppetlabs/apache', '0.1.10'\n",
+            f"{str(FORGE_MODULE_NGINX)}mod 'puppetlabs/apache', '0.1.10'\n",
             "shasha")
 
     @staticmethod
@@ -312,6 +315,8 @@ class TestPuppetfileListModules:
                                 forge_modules=[forge_module_apache,
                                                forge_module_vcsrepo],
                                 git_modules=[git_module_custommod])
-        assert sorted(puppetfile.list_modules()) == sorted(['custommod',
-                                                            'puppetlabs/apache',
-                                                            'puppetlabs/vcsrepo'])
+        assert sorted(puppetfile.list_modules()) == sorted([
+            'custommod',
+            'puppetlabs/apache',
+            'puppetlabs/vcsrepo'
+        ])
